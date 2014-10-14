@@ -45,7 +45,9 @@
  * Makkelijk niet? Zoveel hokus pokus! Wauw!
  * 
  */
-Route::bind('user', function($value, $route) { // user is wat er tussen {} staat!
+
+// Haal uit commentaar voor mooiere mark-up...
+/* Route::bind('user', function($value, $route) { // user is wat er tussen {} staat!
 	// value bevat hier in dit voorbeeld de voornaam
 	$user = User::where('firstname', '=', $value)->first();
 	if(is_null($user)) {
@@ -55,4 +57,4 @@ Route::bind('user', function($value, $route) { // user is wat er tussen {} staat
 
 	// Wel gevonden? Return de gebruiker die geïnjecteerd moet worden in je functie!
 	return $user;
-});
+}); */
