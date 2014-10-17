@@ -18,11 +18,6 @@ class CreateUsersTable extends Migration {
 			$table->string('email');
 			$table->string('password');
 
-			// Bij het inloggen in de Android app of web app wordt er een token
-			// gegenereerd. Met deze token kunnen ze requests sturen naar de 
-			// RESTful API.
-			$table->string('api_token');
-
 			// Als de user iets "heeft", dan moet je manueel de vreemde sleutels toevoegen.
 			// De rest doet Laravel wél zelf! Dat is toch zo als je je houdt aan de normale
 			// benaming van die vreemde sleutels.

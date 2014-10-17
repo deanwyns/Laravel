@@ -1,6 +1,15 @@
 <?php
+use Dingo\Api\Routing\ControllerTrait;
 
 class UserController extends \BaseController {
+
+	// Dit zorgt ervoor dat je voorgedefinieerde
+	// variabelen van de dingo/api package kunt
+	// gebruiken.
+	// Bijvoorbeeld $auth waarmee je de user kunt opvragen:
+	// $this->auth->user();
+	use ControllerTrait;
+
 
 	/**
 	 * Display a listing of the resource.

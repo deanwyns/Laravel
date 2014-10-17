@@ -48,41 +48,6 @@ Route::filter('auth', function()
 	}
 });
 
-
-Route::filter('auth.basic', function()
-{
-	return Auth::basic();
-});
-
-Route::filter('auth.token', function($route, $request) {
-	// We vragen de token op vanuit de header
-	$payload = $request->header('X-Auth-Token');
-	// De gebruiker met deze token halen we op
-	$user = User::where('api_token', '=', $payload)->first();
-
-	// Als er geen gebruiker is gevonden, of als de token
-	// niet is meegegeven, geven we in JSON een 401 error terug
-	if(is_null($user) || empty($payload)) {
-		$response = Response::json([
-			'error' => true,
-			'message' => 'Not authenticated',
-			'code' => 401],
-			401
-		);
-
-		$response->header('Content-Type', 'application/json');
-		return $response;
-	}
-
-	// Als het geen Ajax-request is
-	if(!$request->ajax()) {
-		// Redirect naar API documentation
-		// of een View returnen...
-		// Nog niet zeker dat we een API doc
-		// gaan maken natuurlijk. :-)
-	}
-})
-
 /*
 |--------------------------------------------------------------------------
 | Guest Filter
