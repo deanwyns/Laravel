@@ -65,6 +65,7 @@
 // Zo, dat is weer een lange uitleg! :D
 // Hopelijk is dit nu wat duidelijker... Ik weet dat het wat nieuw en onduidelijk is (voor mij ook),
 // maar zo wordt dit door alle goede apps gedaan die gebruik maken van een REST API.
+// Zou hetzelfde werken in .NET en Java.
 // 						 
 Route::post('oauth/access_token', function() {
     return Response::json(Authorizer::issueAccessToken());
@@ -81,8 +82,14 @@ Route::api(['version' => 'v1', 'protected' => true], function() {
 	// Prefix wilt zeggen dat voor elke request /api/ komt.
 	// Before is een lijst van filters die voor de request naar
 	// de controller wordt verstuurd, worden uitgevoerd.
-	Route::resource('user', 'UserController');
-	Route::resource('vakantie', 'VakantieController');
+	// 
+	// Resource omvat een heleboel routes in één statement.
+	// Alle CRUD operaties eigenlijk, maar er zitten
+	// ook methoden bij om een create of edit form aan
+	// te vragen, en die moeten weg, want we werken met puur
+	// een API :-)
+	Route::resource('user', 'UserController', ['except' => ['create', 'edit']]);
+	Route::resource('vakantie', 'VakantieController', ['except' => ['create', 'edit']]);
 	// Dit wordt dus respectievelijk
 	// www.joetz.be/api/user/
 	// www.joetz.be/api/vakantie/
