@@ -1,7 +1,5 @@
 <?php
 
-namespace App\Repositories;
-
 abstract class AbstractRepository {
 
 	/**
@@ -11,14 +9,6 @@ abstract class AbstractRepository {
 	 */
 	protected $model;
 
-	public function all() {
-		$this->model->all();
-	}
-
-	public function __contruct(User $model) {
-		$this->model = $user;
-	}
-
 	/**
 	 * Make a new instance of the entity to query on
 	 *
@@ -26,6 +16,14 @@ abstract class AbstractRepository {
 	 */
 	public function make(array $with = []) {
 		return $this->model->with($with);
+	}
+
+	/**
+	 * Find all entities
+	 * @return Illuminate\Database\Eloquent\Model
+	 */
+	public function all() {
+		return $this->model->all();
 	}
 
 	/**

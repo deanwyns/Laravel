@@ -1,11 +1,21 @@
 <?php
 
-namespace App\Repositories\User;
+class UserRepositoryImpl extends AbstractRepository implements UserRepository {
 
-use App\Repositories\AbstractRepository;
+	public function __construct(User $model) {
+		$this->model = $model;
+	}
 
-class UserRepositoryImpl extends AbstractRepository implements \UserRepository {
+	public function getByEmail($email, array $with = []) {
+		$query = $this->make($with);
 
-	
-	
+		return $query->where('email', '=', $email)->first();
+	}
+
+	public function getByUsername($username, array $with = []) {
+		$query = $this->make($with);
+
+		return $query->where('username', '=', $username)->first();
+	}
+
 }

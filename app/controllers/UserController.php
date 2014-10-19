@@ -1,7 +1,8 @@
 <?php
+
 use Dingo\Api\Routing\ControllerTrait;
 
-class UserController extends \BaseController {
+class UserController extends \APIBaseController {
 
 	// Dit zorgt ervoor dat je voorgedefinieerde
 	// variabelen van de dingo/api package kunt
@@ -9,6 +10,19 @@ class UserController extends \BaseController {
 	// Bijvoorbeeld $auth waarmee je de user kunt opvragen:
 	// $this->auth->user();
 	use ControllerTrait;
+
+	/**
+	 * User Repository
+	 * @var UserRepositoryImpl
+	 */
+	protected $userRepository;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct(UserRepository $userRepository) {
+		$this->userRepository = $userRepository;
+	}
 
 
 	/**
@@ -18,7 +32,7 @@ class UserController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+		return $this->userRepository->all();
 	}
 
 

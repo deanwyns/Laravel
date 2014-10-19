@@ -58,3 +58,46 @@
 	// Wel gevonden? Return de gebruiker die geïnjecteerd moet worden in je functie!
 	return $user;
 }); */
+
+/**
+ * Deze binder zoekt de gebruiker op basis van de
+ * meegeleverde id, e-mail of username.
+ *
+ * We checken eerst of het numeriek is, dan zoeken we
+ * op id.
+ * Dan checken we op een amil, zoeken we op e-mail.
+ * Als laatste proberen we nog op username.
+ *
+ * Dit is tijdelijk en kan nog veranderen, aangezien
+ * we niet weten welke van de drie het meest gebruikt
+ * gaat worden en of we ze wel allemaal gaan
+ * ondersteunen.
+ */
+Route::bind('user', function($value, $route) {
+	$userRepository = App::make('App\Repository\User\UserRepository');
+
+	if(is_numeric($value)) {
+		$user = $userRepository->getById($value);
+
+		if(is_null($user))
+			throw new NotFoundHttpException;
+		else
+			return $user;
+	}
+	
+	if(filter_var($value, FILTER_VALIDATE_EMAIL)) {
+		$user = $userRepository->getByEmail($value);
+
+		if(is_null($user))
+			throw new NotFoundHttpException;
+		else
+			return $user;
+	}
+
+	$user = $userRepository->getByUsername($value);
+
+	if(is_null($user))
+		throw new NotFoundHttpException;
+	else
+		return $user;
+});

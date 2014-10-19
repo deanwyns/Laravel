@@ -1,6 +1,6 @@
 <?php
 
-class VakantieController extends \BaseController {
+class VakantieController extends \APIBaseController {
 
 	/**
 	 * Display a listing of the resource.
