@@ -1,6 +1,7 @@
 <?php
 
 use Dingo\Api\Routing\ControllerTrait;
+use Dingo\Api\Exception\StoreResourceFailedException;
 
 class UserController extends \APIBaseController {
 
@@ -43,7 +44,16 @@ class UserController extends \APIBaseController {
 	 */
 	public function store()
 	{
-		//
+		$user = new User;
+		if(!$user->validate(Input::all()))
+			throw new StoreResourceFailedException(
+				'Fout bij het aanmaken gebruiker.', $user->errors());
+
+		$user->email = Input::get('email');
+
+		//Rounds stelt de "cost" voor (BCrypt)
+		$user->password = Hash::make(Input::get('password'), ['rounds' => 12]);
+		$user->save();
 	}
 
 
@@ -55,7 +65,7 @@ class UserController extends \APIBaseController {
 	 */
 	public function show($user)
 	{
-		//
+		return $user;
 	}
 
 
@@ -67,7 +77,13 @@ class UserController extends \APIBaseController {
 	 */
 	public function update($user)
 	{
-		//
+		if(!$user->validate(Input::all()))
+			throw new UpdateResourceFailedException(
+				'Fout bij het updaten gebruiker', $user->errors());
+
+		$user->email = Input::get('email');
+		$user->password = Hash::make(Input::get('password', ['rounds' => 12]));
+		$user->save();
 	}
 
 
@@ -79,7 +95,7 @@ class UserController extends \APIBaseController {
 	 */
 	public function destroy($user)
 	{
-		//
+		$user->destroy();
 	}
 
 

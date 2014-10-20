@@ -24,13 +24,17 @@ class User extends ValidatableEloquent implements UserInterface, RemindableInter
 	protected $hidden = ['password', 'remember_token'];
 
 	/**
+	 * Fillable attributes
+	 * @var array
+	 */
+	protected $fillable = ['email', 'password'];
+
+	/**
 	 * Validation rules for the User model
 	 * @var array
 	 */
 	protected $rules =
-		['username' => 'required|min:3',
-		 'password' => 'required'];
-
-	public function isValid
-
+		['email' => 'required|email',
+		 'password' => 'required|confirmed',
+		 'password_confirmed' => 'required'];
 }
