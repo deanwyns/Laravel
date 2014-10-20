@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+
 /*
 |--------------------------------------------------------------------------
 | Model Binders
@@ -80,24 +82,24 @@ Route::bind('user', function($value, $route) {
 		$user = $userRepository->getById($value);
 
 		if(is_null($user))
-			throw new NotFoundHttpException;
-		else
-			return $user;
+			throw new BadRequestHttpException;
+		
+		return $user;
 	}
 	
 	if(filter_var($value, FILTER_VALIDATE_EMAIL)) {
 		$user = $userRepository->getByEmail($value);
 
 		if(is_null($user))
-			throw new NotFoundHttpException;
-		else
-			return $user;
+			throw new BadRequestHttpException;
+		
+		return $user;
 	}
 
 	$user = $userRepository->getByUsername($value);
 
 	if(is_null($user))
-		throw new NotFoundHttpException;
-	else
-		return $user;
+		throw new BadRequestHttpException;
+	
+	return $user;
 });

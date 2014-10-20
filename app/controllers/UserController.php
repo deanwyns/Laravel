@@ -54,6 +54,9 @@ class UserController extends \APIBaseController {
 		//Rounds stelt de "cost" voor (BCrypt)
 		$user->password = Hash::make(Input::get('password'), ['rounds' => 12]);
 		$user->save();
+
+		// HTTP Status Code 201 "Created"
+		return $this->setStatusCode(201);
 	}
 
 
@@ -84,6 +87,9 @@ class UserController extends \APIBaseController {
 		$user->email = Input::get('email');
 		$user->password = Hash::make(Input::get('password', ['rounds' => 12]));
 		$user->save();
+
+		// HTTP Status Code 200 "OK"
+		return $this->setStatusCode(200);
 	}
 
 
@@ -95,7 +101,11 @@ class UserController extends \APIBaseController {
 	 */
 	public function destroy($user)
 	{
-		$user->destroy();
+		if($user->destroy())
+			return $this->setStatusCode(200);
+		else
+			throw new DeleteResourceFailedException(
+				'Fout bij het verwijderen gebruiker');
 	}
 
 
