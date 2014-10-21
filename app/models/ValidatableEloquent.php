@@ -51,17 +51,4 @@ class ValidatableEloquent extends Eloquent {
     public function errors() {
         return $this->errors;
     }
-
-    /**
-     * Overrides the standard save method so that only
-     * valid models can be persisted.
-     * @param  [type] $options [description]
-     * @return boolean          true when persisted
-     */
-    public function save(array $options = []) {
-        if($this->validate())
-            return parent::save($options);
-
-        return false;
-    }
 }

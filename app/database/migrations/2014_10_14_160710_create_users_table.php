@@ -28,9 +28,6 @@ class CreateUsersTable extends Migration {
 			// Vreemde sleutels zijn trouwens unsigned, want id is best niet onder nul!
 			// Je kunt ook $table->unsignedInteger('bla') doen.
 
-			// Wordt door Laravel gebruikt om gebruikers te onthouden!
-			$table->string('remember_token');
-
 			// Maakt een created_at en updated_at kolom aan. Die worden automatisch geüpdatet bij een save() van het Model
 			$table->timestamps();
 		});

@@ -13,7 +13,42 @@
 
 App::before(function($request)
 {
-	//
+    /**
+     * Laravel $code is always 500
+     * message format:
+     * SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+     * SQLSTATE[HY000] [1049] Unknown database 'blah'
+     */
+    App::error(function(\PDOException $e, $code) {
+        Log::error('FATAL DATABASE ERROR: ' . $code . ' = ' . $e->getMessage());
+
+        if (App::Environment('local')) {
+            $message = explode(' ', $e->getMessage());
+            $dbCode = rtrim($message[1], ']');
+            $dbCode = trim($dbCode, '[');
+
+            // codes specific to MySQL
+            switch ($dbCode) {
+                case 1049:
+                    $userMessage = 'Unknown database - probably config error:';
+                    break;
+                case 2002:
+                    $userMessage = 'DATABASE IS DOWN:';
+                    break;
+                default:
+                    $userMessage = 'Untrapped Error:';
+                    break;
+            }
+
+            $userMessage = $userMessage . '<br>' . $e->getMessage();
+
+        } else {
+            $userMessage = 'We are experiencing a bad bad problem. We are sorry for the inconvenience!';
+        }
+
+        throw new ServiceUnavailableHttpException($userMessage, $code);
+
+    }); // end of App::error
 });
 
 
@@ -46,6 +81,11 @@ Route::filter('auth', function()
 			return Redirect::guest('login');
 		}
 	}
+});
+
+Route::filter('auth.basic', function()
+{
+	return Auth::basic();
 });
 
 /*

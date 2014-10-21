@@ -88,8 +88,7 @@ class UserController extends \APIBaseController {
 		$user->password = Hash::make(Input::get('password', ['rounds' => 12]));
 		$user->save();
 
-		// HTTP Status Code 200 "OK"
-		return $this->setStatusCode(200);
+		return $user;
 	}
 
 
@@ -101,6 +100,7 @@ class UserController extends \APIBaseController {
 	 */
 	public function destroy($user)
 	{
+		// HTTP Status Code 200 "OK"
 		if($user->destroy())
 			return $this->setStatusCode(200);
 		else
