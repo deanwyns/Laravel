@@ -1,4 +1,4 @@
-<?php
+x<?php
 
 /*
 |--------------------------------------------------------------------------
@@ -90,11 +90,13 @@ Route::api(['version' => 'v1', 'protected' => true], function() {
 	// een API :-)
 	Route::resource('user', 'UserController', ['except' => ['create', 'edit']]);
 	Route::resource('vakantie', 'VakantieController', ['except' => ['create', 'edit']]);
+	/*Route::group(['prefix' => 'user']), function() {
+		Route::post('{user}', )
+	});*/
 	// Dit wordt dus respectievelijk
 	// www.joetz.be/api/user/
 	// www.joetz.be/api/vakantie/
 });
 
 // Voorlopig even met id's werken tot we wat meer hebben...
-Route::model('user', 'User');
 Route::model('vakantie', 'Vakantie');

@@ -1,6 +1,8 @@
 <?php
 
 use Dingo\Api\Routing\ControllerTrait;
+use Dingo\Api\Exception\DeleteResourceFailedException;
+use Dingo\Api\Exception\UpdateResourceFailedException;
 use Dingo\Api\Exception\StoreResourceFailedException;
 
 class UserController extends \APIBaseController {
@@ -56,7 +58,7 @@ class UserController extends \APIBaseController {
 		$user->save();
 
 		// HTTP Status Code 201 "Created"
-		return $this->setStatusCode(201);
+		return $this->created();
 	}
 
 
@@ -101,7 +103,7 @@ class UserController extends \APIBaseController {
 	public function destroy($user)
 	{
 		// HTTP Status Code 200 "OK"
-		if($user->destroy())
+		if($user->delete())
 			return $this->setStatusCode(200);
 		else
 			throw new DeleteResourceFailedException(

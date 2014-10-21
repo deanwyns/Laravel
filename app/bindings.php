@@ -76,7 +76,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  * ondersteunen.
  */
 Route::bind('user', function($value, $route) {
-	$userRepository = App::make('App\Repository\User\UserRepository');
+	$userRepository = App::make('UserRepository');
 
 	if(is_numeric($value)) {
 		$user = $userRepository->getById($value);
