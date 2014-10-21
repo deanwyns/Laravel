@@ -34,7 +34,7 @@ class User extends ValidatableEloquent implements UserInterface, RemindableInter
 	 * @var array
 	 */
 	protected $rules =
-		['email' => 'required|email',
-		 'password' => 'required|min:6',
-		 'password_confirmed' => 'same:password'];
+		['email' => 'sometimes|required|email',
+		 'password' => 'sometimes|required|min:6',
+		 'password_confirmed' => 'sometimes|same:password'];
 }

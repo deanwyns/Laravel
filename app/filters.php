@@ -40,15 +40,15 @@ App::before(function($request)
                     break;
             }
 
-            $userMessage = $userMessage . '<br>' . $e->getMessage();
+            $userMessage = $userMessage . ' - ' . $e->getMessage();
 
         } else {
-            $userMessage = 'We are experiencing a bad bad problem. We are sorry for the inconvenience!';
+            $userMessage = 'Onbekende fout';
         }
 
         throw new ServiceUnavailableHttpException($userMessage, $code);
 
-    }); // end of App::error
+    });
 });
 
 
@@ -121,4 +121,22 @@ Route::filter('csrf', function()
 	{
 		throw new Illuminate\Session\TokenMismatchException;
 	}
+});
+
+/*
+|--------------------------------------------------------------------------
+| SSL Filter
+|--------------------------------------------------------------------------
+|
+| The SSL filter is responsible for forcing the request to be secure (SSL).
+| If it's not, the user is redirected to the secure equivalent.
+|
+*/
+
+Route::filter('force.ssl', function()
+{
+    if(!Request::secure()) {
+        return Redirect::secure(Request::path());
+    }
+
 });

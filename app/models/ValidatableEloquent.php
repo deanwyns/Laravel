@@ -51,4 +51,17 @@ class ValidatableEloquent extends Eloquent {
     public function errors() {
         return $this->errors;
     }
+
+    /**
+     * Overrides update function to first check if
+     * a password is given, 
+     * @param  array $attributes
+     * @return bool|int
+     */
+    public function update(array $attributes = []) {
+        if(array_key_exists('password', $attributes))
+            $attributes['password'] = Hash::make($attributes['password'], ['rounds' => 12]);
+
+        return parent::update($attributes);
+    }
 }

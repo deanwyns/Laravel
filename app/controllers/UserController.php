@@ -49,16 +49,17 @@ class UserController extends \APIBaseController {
 		$user = new User;
 		if(!$user->validate(Input::all()))
 			throw new StoreResourceFailedException(
-				'Fout bij het aanmaken gebruiker.', $user->errors());
+				'Fout bij het aanmaken gebruiker', $user->errors());
 
 		$user->email = Input::get('email');
 
 		//Rounds stelt de "cost" voor (BCrypt)
 		$user->password = Hash::make(Input::get('password'), ['rounds' => 12]);
-		$user->save();
-
-		// HTTP Status Code 201 "Created"
-		return $this->created();
+		if($user->save())
+			return $this->created(); // HTTP Status Code 201 "Created"
+		else
+			throw new StoreResourceFailedException(
+				'Fout bij het aanmaken gebruiker');
 	}
 
 
@@ -86,9 +87,11 @@ class UserController extends \APIBaseController {
 			throw new UpdateResourceFailedException(
 				'Fout bij het updaten gebruiker', $user->errors());
 
-		$user->email = Input::get('email');
-		$user->password = Hash::make(Input::get('password', ['rounds' => 12]));
-		$user->save();
+		if($user->update(Input::all()))
+			return $user;
+		else
+			throw new UpdateResourceFailedException(
+				'Fout bij het updaten gebruiker');
 
 		return $user;
 	}
@@ -102,9 +105,8 @@ class UserController extends \APIBaseController {
 	 */
 	public function destroy($user)
 	{
-		// HTTP Status Code 200 "OK"
 		if($user->delete())
-			return $this->setStatusCode(200);
+			return $this->setStatusCode(200); // HTTP Status Code 200 "OK"
 		else
 			throw new DeleteResourceFailedException(
 				'Fout bij het verwijderen gebruiker');
