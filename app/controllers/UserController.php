@@ -4,6 +4,7 @@ use Dingo\Api\Routing\ControllerTrait;
 use Dingo\Api\Exception\DeleteResourceFailedException;
 use Dingo\Api\Exception\UpdateResourceFailedException;
 use Dingo\Api\Exception\StoreResourceFailedException;
+use Dingo\Api\Http\ResponseBuilder;
 
 class UserController extends \APIBaseController {
 
@@ -82,7 +83,7 @@ class UserController extends \APIBaseController {
 	 */
 	public function update($user)
 	{
-		if(!$user->validate(Input::all()))
+		if(!$user->validatePassedOnly(Input::all()))
 			throw new UpdateResourceFailedException(
 				'Fout bij het updaten gebruiker', $user->errors());
 
@@ -104,9 +105,13 @@ class UserController extends \APIBaseController {
 	 */
 	public function destroy($user)
 	{
-		if($user->delete())
-			return $this->setStatusCode(200); // HTTP Status Code 200 "OK"
-		else
+		if($user->delete()) {
+			$response = new ResponseBuilder(null);
+			// HTTP Status Code 200 "OK"
+			$response->setStatusCode(200);
+
+			return $response; 
+		} else
 			throw new DeleteResourceFailedException(
 				'Fout bij het verwijderen gebruiker');
 	}
