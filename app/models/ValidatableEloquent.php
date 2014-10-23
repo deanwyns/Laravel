@@ -32,9 +32,12 @@ class ValidatableEloquent extends Eloquent {
      * @param  array $data of input data
      * @return boolean       true when valid
      */
-    public function validate($data)
+    public function validate($data, $sometimes = null)
     {
         $v = Validator::make($data, $this->rules);
+
+        if(!is_null($sometimes))
+            $sometimes($v);
 
         if ($v->fails()) {
             $this->errors = $v->messages();

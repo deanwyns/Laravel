@@ -74,7 +74,6 @@ class UserController extends \APIBaseController {
 		return $user;
 	}
 
-
 	/**
 	 * Update the specified resource in storage.
 	 *
@@ -83,7 +82,18 @@ class UserController extends \APIBaseController {
 	 */
 	public function update($user)
 	{
-		if(!$user->validate(Input::all()))
+		// Anonieme fnctie die je meegeeft aan de validate functie van het Model.
+		// Deze functie wordt uitgevoerd voor dat er gevalideerd wordt.
+		// 
+		// Moet zo gedaan worden om password_confirmed enkel required te maken
+		// wanneer password is ingevuld. Lukt niet door de 'rules' aan te passen.
+		$sometimes = function($validator) {
+			$validator->sometimes('password_confirmed', 'required', function($input) use($validator) {
+				return array_key_exists('password', $validator->getData());
+			});
+		};
+
+		if(!$user->validate(Input::all(), $sometimes))
 			throw new UpdateResourceFailedException(
 				'Fout bij het updaten gebruiker', $user->errors());
 
