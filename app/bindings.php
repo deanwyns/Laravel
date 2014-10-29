@@ -96,10 +96,12 @@ Route::bind('user', function($value, $route) {
 		return $user;
 	}
 
-	$user = $userRepository->getByUsername($value);
+	throw new BadRequestHttpException;
+
+	/*$user = $userRepository->getByUsername($value);
 
 	if(is_null($user))
 		throw new BadRequestHttpException;
 	
-	return $user;
+	return $user;*/
 });

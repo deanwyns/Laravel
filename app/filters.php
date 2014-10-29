@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
+
 /*
 |--------------------------------------------------------------------------
 | Application & Route Filters
@@ -46,7 +48,7 @@ App::before(function($request)
             $userMessage = 'Onbekende fout';
         }
 
-        throw new ServiceUnavailableHttpException($userMessage, $code);
+        return Response::json([ "message" => $userMessage, "status_code" => $code ], $code);
 
     });
 });

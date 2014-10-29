@@ -116,5 +116,8 @@ class UserController extends \APIBaseController {
 				'Fout bij het verwijderen gebruiker');
 	}
 
+	public function missingMethod($parameters = []) {
+	    return $this->errorNotFound();
+	}
 
 }

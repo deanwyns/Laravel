@@ -51,6 +51,11 @@ App::error(function(Exception $exception, $code)
 	Log::error($exception);
 });
 
+App::missing(function($exception)
+{
+    return Response::json([ "message" => "Not found", "status_code" => 404 ], 404);
+});
+
 /*
 |--------------------------------------------------------------------------
 | Maintenance Mode Handler
@@ -64,7 +69,8 @@ App::error(function(Exception $exception, $code)
 
 App::down(function()
 {
-	return Response::make("Be right back!", 503);
+	//return Response::make("Be right back!", 503);
+	return Response::json([ "error" => "Be right back!", "status_code" => 404 ], 503);
 });
 
 /*
