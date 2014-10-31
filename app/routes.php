@@ -88,7 +88,9 @@ Route::api(['version' => 'v1', 'protected' => true], function() {
 	// ook methoden bij om een create of edit form aan
 	// te vragen, en die moeten weg, want we werken met puur
 	// een API :-)
+	Route::get('user/me', ['as' => 'user.me', 'uses' => 'UserController@getMe']);
 	Route::resource('user', 'UserController', ['except' => ['create', 'edit']]);
+
 	Route::resource('vakantie', 'VakantieController', ['except' => ['create', 'edit']]);
 	/*Route::group(['prefix' => 'user']), function() {
 		Route::post('{user}', )

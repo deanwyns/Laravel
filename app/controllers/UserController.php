@@ -76,6 +76,16 @@ class UserController extends \APIBaseController {
 	}
 
 	/**
+	 * Display the authenticated user
+	 * 
+	 * @return Reponse
+	 */
+	public function getMe() {
+		Log::info('getMe');
+		return $this->auth->user();
+	}
+
+	/**
 	 * Update the specified resource in storage.
 	 *
 	 * @param  int  $id
