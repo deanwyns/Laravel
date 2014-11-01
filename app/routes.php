@@ -67,7 +67,7 @@
 // maar zo wordt dit door alle goede apps gedaan die gebruik maken van een REST API.
 // Zou hetzelfde werken in .NET en Java.
 // 						 
-Route::post('oauth/access_token', function() {
+Route::post('api/access_token', function() {
     return Response::json(Authorizer::issueAccessToken());
 });
 
@@ -77,7 +77,7 @@ Route::post('oauth/access_token', function() {
 // In de config file van dingo/api heb ik de default prefix
 // op 'api' gezet, zodat je dit niet bij elke group hier
 // moeten zetten.
-Route::api(['version' => 'v1', 'protected' => true], function() {
+Route::api(['version' => 'v1'], function() {
 	// Hier komen alle routes specifiek voor onze RESTful API.
 	// Prefix wilt zeggen dat voor elke request /api/ komt.
 	// Before is een lijst van filters die voor de request naar
@@ -88,8 +88,10 @@ Route::api(['version' => 'v1', 'protected' => true], function() {
 	// ook methoden bij om een create of edit form aan
 	// te vragen, en die moeten weg, want we werken met puur
 	// een API :-)
-	Route::get('user/me', ['as' => 'user.me', 'uses' => 'UserController@getMe']);
-	Route::resource('user', 'UserController', ['except' => ['create', 'edit']]);
+	Route::group(['prefix' => 'user', 'protected' => true], function() {
+		Route::get('me', 'UserController@getMe');
+	});
+	Route::resource('user', 'UserController', ['protected' => true, 'except' => ['create', 'edit']]);
 
 	Route::resource('vakantie', 'VakantieController', ['except' => ['create', 'edit']]);
 	/*Route::group(['prefix' => 'user']), function() {

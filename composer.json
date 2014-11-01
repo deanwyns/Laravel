@@ -5,8 +5,9 @@
 	"license": "MIT",
 	"require": {
 		"laravel/framework": "4.2.*",
-		"dingo/api": "0.7.*",
-		"lucadegasperi/oauth2-server-laravel": "3.*"
+		"dingo/api": "dev-master#7a1f798972635903bf9b26c4a76e97e7abb37358",
+		"lucadegasperi/oauth2-server-laravel": "3.*",
+		"barryvdh/laravel-cors": "0.2.x"
 	},
 	"autoload": {
 		"classmap": [
