@@ -91,7 +91,10 @@ Route::api(['version' => 'v1'], function() {
 	Route::group(['prefix' => 'user', 'protected' => true], function() {
 		Route::get('me', 'UserController@getMe');
 	});
-	Route::resource('user', 'UserController', ['protected' => true, 'except' => ['create', 'edit']]);
+
+	Route::group(['protected' => true], function() {
+		Route::resource('user', 'UserController', ['except' => ['create', 'edit']]);
+	});
 
 	Route::resource('vakantie', 'VakantieController', ['except' => ['create', 'edit']]);
 	/*Route::group(['prefix' => 'user']), function() {
