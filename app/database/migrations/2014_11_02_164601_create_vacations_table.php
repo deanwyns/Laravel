@@ -13,8 +13,7 @@ class CreateVacationsTable extends Migration {
 	public function up()
 	{
 
-		Schema::create('vacations', function(Blueprint $table){
-		{
+		Schema::create('vacations', function(Blueprint $table) {
 			$table->increments('id');
 			$table->string('title');
 			$table->string('description');
@@ -24,12 +23,14 @@ class CreateVacationsTable extends Migration {
 			$table->tinyInteger('max_age');
 			$table->string('transportation');
 			$table->tinyInteger('max_participants');
-			$table->decimal('base_cost',1,2); //precisie is 1 met 2 cijfers na de komma mogelijk (dus 0,01)
-			$table->decimal('one_bm_member_cost',1,2);
-			$table->decimal('two_bm_member_cost',1,2);
+			// Precisie is max aantal cijfers (zowel links als rechts) volgens SQL data type :P
+			$table->decimal('base_cost', 6, 2); //precisie is 1 met 2 cijfers na de komma mogelijk (dus 0,01)
+			$table->decimal('one_bm_member_cost', 6, 2);
+			$table->decimal('two_bm_member_cost', 6, 2);
 
 			//nog eens onderzoeken hoe het zit met de tussentabel
-			$table->foreign('monitor_id')->references('id')->on('monitors')
+			$table->foreign('monitor_id')->references('id')->on('monitors');
+		});
 	}
 
 	/**

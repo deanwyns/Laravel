@@ -1,6 +1,6 @@
 <?php
 
-class Vacacation extends ValidatableEloquent {
+class Vacation extends ValidatableEloquent {
 	protected $table = 'vacations';
 
 	protected $fillable = [
@@ -22,9 +22,10 @@ class Vacacation extends ValidatableEloquent {
 		'max_age' => 'digits:2',
 		'transportation' => 'max: 280',
 		'max_participants' => 'numeric|max:3',
-		'base_cost' => 'integer|required', 
-		'one_bm_member_cost' => 'integer|required',
-		'two_bm_member_cost' => 'integer|required'
+		// Regex voor decimal met max 2 cijfers na komma. Kun je vervangen door eigen gemaakte validatie regel
+		'base_cost' => 'required|regex:^\d+(\.\d{1,2})?$',
+		'one_bm_member_cost' => 'required|regex:^\d+(\.\d{1,2})?$',
+		'two_bm_member_cost' => 'required|regex:^\d+(\.\d{1,2})?$'
 		// base_cost, one & two_bm_member_cost voorlopig integer moet eigenlijk een kommagetal of currency worden
 	]
 		//timestamps zijn niet nodig voor deze 'tabel'

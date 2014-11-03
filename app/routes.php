@@ -96,7 +96,7 @@ Route::api(['version' => 'v1'], function() {
 		Route::resource('user', 'UserController', ['except' => ['create', 'edit']]);
 	});
 
-	Route::resource('vakantie', 'VakantieController', ['except' => ['create', 'edit']]);
+	Route::resource('vakantie', 'VacationController', ['except' => ['create', 'edit']]);
 	/*Route::group(['prefix' => 'user']), function() {
 		Route::post('{user}', )
 	});*/
