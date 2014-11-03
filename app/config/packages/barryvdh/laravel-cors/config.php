@@ -26,9 +26,9 @@ return array(
     ),
 
     'paths' => array(
-        '*' => array(
+        'api/*' => array(
             'allowedOrigins' => array('*'),
-            'allowedHeaders' => array('Content-Type', 'Authoriation', 'Accept'),
+            'allowedHeaders' => array('Content-Type', 'Accept', 'Authorization'),
             'allowedMethods' => array('POST', 'PUT', 'GET', 'DELETE'),
             'maxAge' => 3600,
         ),

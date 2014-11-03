@@ -51,14 +51,6 @@ App::before(function($request)
         return Response::json([ "message" => $userMessage, "status_code" => $code ], $code);
 
     });
-
-    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-
-        header('Access-Control-Allow-Origin', '*');
-        header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization, X-Request-With');
-
-        exit;
-    }
 });
 
 
