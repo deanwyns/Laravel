@@ -29,7 +29,7 @@ class CreateVacationsTable extends Migration {
 			$table->decimal('two_bm_member_cost', 6, 2);
 
 			//nog eens onderzoeken hoe het zit met de tussentabel
-			$table->foreign('monitor_id')->references('id')->on('monitors');
+/*			$table->foreign('monitor_id')->references('id')->on('monitors');*/
 		});
 	}
 

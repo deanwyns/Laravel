@@ -2,7 +2,7 @@
 
 class VacationRepositoryImpl extends AbstractRepository implements VacationRepository {
 
-	public function __construct(User $model) {
+	public function __construct(Vacation $model) {
 		$this->model = $model;
 	}
 

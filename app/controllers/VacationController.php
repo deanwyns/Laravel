@@ -1,12 +1,18 @@
 <?php
+use Dingo\Api\Routing\ControllerTrait;
+use Dingo\Api\Exception\DeleteResourceFailedException;
+use Dingo\Api\Exception\UpdateResourceFailedException;
+use Dingo\Api\Exception\StoreResourceFailedException;
+use Dingo\Api\Http\ResponseBuilder;
+
 
 class VacationController extends \APIBaseController {
 
 	use ControllerTrait;
 
-	protected $vacationRepository
+	protected $vacationRepository;
 
-	public function __construct(vacationRepository $vacationRepository){
+	public function __construct(VacationRepository $vacationRepository){
 		$this->vacationRepository = $vacationRepository;
 	}
 

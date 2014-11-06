@@ -16,7 +16,7 @@ class Vacation extends ValidatableEloquent {
 	protected $rules = [
 		'title' => 'required|max:140|unique:vacations',
 		'description' => 'max: 5000',
-		'promo_text' => 'max: 280',
+		'promo_text' => 'max: 5000',
 		'location' => 'required|max:280',
 		'min_age' => 'digits:2',
 		'max_age' => 'digits:2',
@@ -29,7 +29,7 @@ class Vacation extends ValidatableEloquent {
 		// base_cost, one & two_bm_member_cost voorlopig integer moet eigenlijk een kommagetal of currency worden
 	]
 		//timestamps zijn niet nodig voor deze 'tabel'
-	public $timestamps = false;
+/*	public $timestamps = false;
 
 	public function photo(){
 		return $this -> hasMany('Photo');
@@ -45,5 +45,5 @@ class Vacation extends ValidatableEloquent {
 
 	public function Registration(){
 		return $this -> hasMany('Registration');
-	}
+	}*/
 }
