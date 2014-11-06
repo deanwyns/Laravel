@@ -96,7 +96,14 @@ Route::api(['version' => 'v1'], function() {
 		Route::resource('user', 'UserController', ['except' => ['create', 'edit']]);
 	});
 
-	Route::resource('vakantie', 'VacationController', ['except' => ['create', 'edit']]);
+	Route::group(['prefix' => 'vacation'], function() {
+		Route::get('/', 'VacationController@index');
+		Route::post('/', ['uses' => 'VacationController@store', 'protected' => true]);
+		Route::get('/{vacation}', 'VacationController@show');
+		Route::put('/{vacation}', ['uses' => 'VacationController@update', 'protected' => true]);
+		Route::delete('/{vacation}', ['uses' => 'VacationController@destroy', 'protected' => true]);
+	});
+
 	/*Route::group(['prefix' => 'user']), function() {
 		Route::post('{user}', )
 	});*/
@@ -106,4 +113,4 @@ Route::api(['version' => 'v1'], function() {
 });
 
 // Voorlopig even met id's werken tot we wat meer hebben...
-Route::model('vakantie', 'Vakantie');
+Route::model('vacation', 'Vacation');

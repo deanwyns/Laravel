@@ -11,7 +11,7 @@ class Vacation extends ValidatableEloquent {
 		 'transportation', 'max_participants',
 		'base_cost', // Prijs wanneer geen enkele ouder lid is van Bond Moysson 
 		'one_bm_member_cost', 'two_bm_member_cost' // idem base_cost maar waar respectievelijk 1 & 2 ouders lid van Bond Moysson
-	]
+	];
 
 	protected $rules = [
 		'title' => 'required|max:140|unique:vacations',
@@ -27,7 +27,7 @@ class Vacation extends ValidatableEloquent {
 		'one_bm_member_cost' => 'required|regex:^\d+(\.\d{1,2})?$',
 		'two_bm_member_cost' => 'required|regex:^\d+(\.\d{1,2})?$'
 		// base_cost, one & two_bm_member_cost voorlopig integer moet eigenlijk een kommagetal of currency worden
-	]
+	];
 		//timestamps zijn niet nodig voor deze 'tabel'
 /*	public $timestamps = false;
 
