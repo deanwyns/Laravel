@@ -52,11 +52,10 @@ class UserController extends \APIBaseController {
 			throw new StoreResourceFailedException(
 				'Fout bij het aanmaken gebruiker', $user->errors());
 
-		$user->email = Input::get('email');
+		$attributes = Input::all();
+		$attributes['password'] = Hash::make(Input::get('password'), ['rounds' => 12]);
 
-		//Rounds stelt de "cost" voor (BCrypt)
-		$user->password = Hash::make(Input::get('password'), ['rounds' => 12]);
-		if($user->save())
+		if($user->create($attributes))
 			return $this->created(); // HTTP Status Code 201 "Created"
 		else
 			throw new StoreResourceFailedException(

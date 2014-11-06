@@ -39,7 +39,8 @@ class VacationController extends \APIBaseController {
 			throw new StoreResourceFailedException(
 				'Fout bij het aanmaken van de vakantie', $vacation->errors());
 
-		if($vacation->save())
+		//if($vacation->save())
+		if($this->vacationRepository->create(Input::all()))
 			return $this->created(); // HTTP Status Code 201 "Created"
 		else
 			throw new StoreResourceFailedException(
@@ -75,7 +76,7 @@ class VacationController extends \APIBaseController {
 			return $vacation;
 		else
 			throw new UpdateResourceFailedException(
-				'Fout bij het updaten gebruiker');
+				'Fout bij het updaten van de vakantie');
 
 		return $vacation;
 	}

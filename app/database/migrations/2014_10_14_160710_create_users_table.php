@@ -18,6 +18,16 @@ class CreateUsersTable extends Migration {
 			$table->string('email');
 			$table->string('password');
 
+			$table->string('first_name_mother')->default('');
+			$table->string('last_name_mother')->default('');
+			$table->string('nrn_mother')->default('');
+
+			$table->string('first_name_father')->default('');
+			$table->string('last_name_father')->default('');
+			$table->string('nrn_father')->default('');
+
+			$table->string('phone_number', 10);
+
 			// Als de user iets "heeft", dan moet je manueel de vreemde sleutels toevoegen.
 			// De rest doet Laravel wél zelf! Dat is toch zo als je je houdt aan de normale
 			// benaming van die vreemde sleutels.

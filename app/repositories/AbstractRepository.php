@@ -38,4 +38,8 @@ abstract class AbstractRepository {
 	 
 		return $query->find($id);
 	}
+
+	public function create($attributes) {
+		return $this->model->create($attributes);
+	}
 }
