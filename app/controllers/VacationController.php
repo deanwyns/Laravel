@@ -34,10 +34,10 @@ class VacationController extends \APIBaseController {
 	 */
 	public function store()
 	{
-		$vacation = new User;
+		$vacation = new Vacation;
 		if(!$vacation->validate(Input::all()))
 			throw new StoreResourceFailedException(
-				'Fout bij het aanmaken gebruiker', $vacation->errors());
+				'Fout bij het aanmaken van de vakantie', $vacation->errors());
 
 		if($vacation->save())
 			return $this->created(); // HTTP Status Code 201 "Created"
