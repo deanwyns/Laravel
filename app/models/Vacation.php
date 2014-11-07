@@ -5,32 +5,38 @@ class Vacation extends ValidatableEloquent {
 
 	protected $fillable = [
 		'title', 'description', 
-		'promo_text', // korte beschrijving (voor weergave in lijsten)
+		'promoText', // korte beschrijving (voor weergave in lijsten)
 		'location', 
-		'min_age', 'max_age', // min en max leeftijd om te mogen participeren
-		'transportation', 'max_participants',
-		'base_cost', // Prijs wanneer geen enkele ouder lid is van Bond Moysson 
-		'one_bm_member_cost', 'two_bm_member_cost' // idem base_cost maar waar respectievelijk 1 & 2 ouders lid van Bond Moysson
+		'ageFrom', 'ageTo', // min en max leeftijd om te mogen participeren
+		'transportation', 'maxParticipants',
+		'baseCost', // Prijs wanneer geen enkele ouder lid is van Bond Moysson 
+		'oneBmMemberCost', 'twoBmMemberCost', // idem base_cost maar waar respectievelijk 1 & 2 ouders lid van Bond Moysson
+		'taxDeductable',
+		'beginDate', 'endDate'
 	];
 
 	protected $rules = [
 		'title' => 'required|max:140|unique:vacations',
 		'description' => 'required|max: 5000',
-		'promo_text' => 'max: 5000',
+		'promoText' => 'max: 5000',
 		'location' => 'required|max:280',
-		'min_age' => 'digits:2',
-		'max_age' => 'digits:2',
+		'ageFrom' => 'digits:2',
+		'ageTo' => 'digits:2',
 		'transportation' => 'max: 280',
-		'max_participants' => 'required|numeric|digits:3',
+		'maxParticipants' => 'required|numeric|digits:3',
 		// Regex voor decimal met max 2 cijfers na komma. Kun je vervangen door eigen gemaakte validatie regel
-		'base_cost' => ['required', 'regex:/\d{0,}(\.\d{1,2})?/'],
-		'one_bm_member_cost' => ['required', 'regex:/\d{0,}(\.\d{1,2})?/'],
-		'two_bm_member_cost' => ['required', 'regex:/\d{0,}(\.\d{1,2})?/']
-		// base_cost, one & two_bm_member_cost voorlopig integer moet eigenlijk een kommagetal of currency worden
+		'baseCost' => ['required', 'regex:/\d{0,}(\.\d{1,2})?/'],
+		'oneBmMemberCost' => ['required', 'regex:/\d{0,}(\.\d{1,2})?/'],
+		'twoBmMemberCost' => ['required', 'regex:/\d{0,}(\.\d{1,2})?/'],
+		'taxDeductable' => 'required',
+		'beginDate' => 'required',
+		'endDate' => 'required'
 	];
-		//timestamps zijn niet nodig voor deze 'tabel'
-/*	public $timestamps = false;
 
+		//timestamps zijn niet nodig voor deze 'tabel'
+		public $timestamps = false;
+/*
+// niet relevant tot de andere tabellen zijn geïmplementeerd
 	public function photo(){
 		return $this -> hasMany('Photo');
 	}

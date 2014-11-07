@@ -17,17 +17,20 @@ class CreateVacationsTable extends Migration {
 			$table->increments('id');
 			$table->string('title');
 			$table->text('description');
-			$table->text('promo_text')->nullable();
+			$table->text('promoText')->nullable();
 			$table->string('location');
-			$table->tinyInteger('min_age')->default(3);
-			$table->tinyInteger('max_age')->default(30);
+			$table->tinyInteger('ageFrom')->default(3);
+			$table->tinyInteger('ageTo')->default(30);
 			$table->string('transportation')->default('');
-			$table->tinyInteger('max_participants');
+			$table->tinyInteger('maxParticipants');
 			// Precisie is max aantal cijfers (zowel links als rechts) volgens SQL data type :P
-			$table->decimal('base_cost', 6, 2); //precisie is 1 met 2 cijfers na de komma mogelijk (dus 0,01)
-			$table->decimal('one_bm_member_cost', 6, 2);
-			$table->decimal('two_bm_member_cost', 6, 2);
+			$table->decimal('baseCost', 6, 2); //precisie is 1 met 2 cijfers na de komma mogelijk (dus 0,01)
+			$table->decimal('oneBmMemberCost', 6, 2);
+			$table->decimal('twoBmMemberCost', 6, 2);
 
+			$table->boolean('taxDeductable')->default(false);
+			$table->dateTime('beginDate');
+			$table->dateTime('endDate');
 			$table->timestamps();
 
 			//nog eens onderzoeken hoe het zit met de tussentabel
