@@ -46,6 +46,6 @@ class User extends ValidatableEloquent implements UserInterface, RemindableInter
 		 'nrn_mother' => 'required_with:first_name_mother',
 		 'first_name_father' => 'required_without:first_name_mother',
 		 'last_name_father' => 'required_with:first_name_father',
-		 'nrn_father' => 'required_with:first_name_mother',
+		 'nrn_father' => 'required_with:first_name_father',
 		 'phone_number' => 'required'];
 }
