@@ -80,7 +80,6 @@ class UserController extends \APIBaseController {
 	 * @return Reponse
 	 */
 	public function getMe() {
-		Log::info('getMe');
 		return $this->auth->user();
 	}
 
@@ -92,7 +91,7 @@ class UserController extends \APIBaseController {
 	 */
 	public function update($user)
 	{
-		if(!$user->validatePassedOnly(Input::all()))
+		if(!$user->validate(Input::all(), true, $user->id))
 			throw new UpdateResourceFailedException(
 				'Fout bij het updaten gebruiker', $user->errors());
 

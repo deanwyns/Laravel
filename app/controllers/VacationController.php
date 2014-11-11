@@ -68,7 +68,7 @@ class VacationController extends \APIBaseController {
 	 */
 	public function update($vacation)
 	{
-		if(!$vacation->validatePassedOnly(Input::all()))
+		if(!$vacation->validate(Input::all(), true, $vacation->id))
 			throw new UpdateResourceFailedException(
 				'Fout bij het updaten van de vakantie', $vacation->errors());
 

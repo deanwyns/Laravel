@@ -16,7 +16,7 @@ class Vacation extends ValidatableEloquent {
 	];
 
 	protected $rules = [
-		'title' => 'required|max:140|unique:vacations',
+		'title' => 'required|max:140|unique:vacations,title,{ID}',
 		'description' => 'required|max: 5000',
 		'promoText' => 'max: 5000',
 		'location' => 'required|max:280',
@@ -25,9 +25,9 @@ class Vacation extends ValidatableEloquent {
 		'transportation' => 'max: 280',
 		'maxParticipants' => 'required|numeric|digits:3',
 		// Regex voor decimal met max 2 cijfers na komma. Kun je vervangen door eigen gemaakte validatie regel
-		'baseCost' => ['required', 'regex:/\d{0,}(\.\d{1,2})?/'],
-		'oneBmMemberCost' => ['required', 'regex:/\d{0,}(\.\d{1,2})?/'],
-		'twoBmMemberCost' => ['required', 'regex:/\d{0,}(\.\d{1,2})?/'],
+		'baseCost' => 'required|regex:/\d{0,}(\.\d{1,2})?/',
+		'oneBmMemberCost' => 'required|regex:/\d{0,}(\.\d{1,2})?/',
+		'twoBmMemberCost' => 'required|regex:/\d{0,}(\.\d{1,2})?/',
 		'taxDeductable' => 'required',
 		'beginDate' => 'required',
 		'endDate' => 'required'

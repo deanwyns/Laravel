@@ -32,32 +32,18 @@ class ValidatableEloquent extends Eloquent {
      * @param  array $data of input data
      * @return boolean       true when valid
      */
-    public function validate($data) {
-        $v = Validator::make($data, $this->rules);
-
-        if ($v->fails()) {
-            $this->errors = $v->messages();
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Validates the model against the defined
-     * rules. Only validates passed data.
-     * @param  array $data of input data
-     * @return boolean       true when valid
-     */
-    public function validatePassedOnly($data) {
-        $tmpRules = [];
-        foreach($this->rules as $key => $value) {
-            if(is_array($value)) {
-                $ruleArray = [];
-                array_push($ruleArray, 'sometimes');
-                $tmpRules[$key] = $ruleArray;
-            } else
-                $tmpRules[$key] = 'sometimes|'.$value;
+    public function validate($data, $sometimes = false, $id = '') {
+        $tmpRules = $this->rules;
+        if(!empty($id) || $sometimes) {
+            foreach($this->rules as $key => $value) {
+                if(!empty($id) && strpos($value, '{ID}') !== false) {
+                    $tmpRules[$key] = str_replace('{ID}', $id, $value);
+                }
+                
+                if($sometimes) {
+                    $tmpRules[$key] = $tmpRules[$key] . '|sometimes';
+                }
+            }
         }
 
         $v = Validator::make($data, $tmpRules);
