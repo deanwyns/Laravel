@@ -20,8 +20,8 @@ class Vacation extends ValidatableEloquent {
 		'description' => 'required|max: 5000',
 		'promoText' => 'max: 5000',
 		'location' => 'required|max:280',
-		'ageFrom' => 'digits:2',
-		'ageTo' => 'digits:2',
+		'ageFrom' => 'digits_between:1,2',
+		'ageTo' => 'digits_between:1,2',
 		'transportation' => 'max: 280',
 		'maxParticipants' => 'required|numeric|digits:3',
 		// Regex voor decimal met max 2 cijfers na komma. Kun je vervangen door eigen gemaakte validatie regel
