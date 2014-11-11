@@ -50,8 +50,14 @@ class ValidatableEloquent extends Eloquent {
      * @return boolean       true when valid
      */
     public function validatePassedOnly($data) {
+        $tmpRules = [];
         foreach($this->rules as $key => $value) {
-            $tmpRules[$key] = 'sometimes|'.$value;
+            if(is_array($value)) {
+                $ruleArray = [];
+                array_push($ruleArray, 'sometimes');
+                $tmpRules[$key] = $ruleArray;
+            } else
+                $tmpRules[$key] = 'sometimes|'.$value;
         }
 
         $v = Validator::make($data, $tmpRules);

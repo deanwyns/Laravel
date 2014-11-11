@@ -55,7 +55,7 @@ class UserController extends \APIBaseController {
 		$attributes = Input::all();
 		$attributes['password'] = Hash::make(Input::get('password'), ['rounds' => 12]);
 
-		if($user->create($attributes))
+		if($this->userRepository->create($attributes))
 			return $this->created(); // HTTP Status Code 201 "Created"
 		else
 			throw new StoreResourceFailedException(
