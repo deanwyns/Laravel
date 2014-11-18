@@ -47,21 +47,58 @@ class UserController extends \APIBaseController {
 	 */
 	public function store()
 	{
-		$user = new User;
-		if(!$user->validate(Input::all()))
+		$user = new User; $parents = new Parents;
+		if(!($user->validate(Input::all()) & $parents->validate(Input::all()))) {
+			$userError = is_object($user->errors()) ? $user->errors()->toArray() : [];
+			$subUserError = is_object($parents->errors()) ? $parents->errors()->toArray() : [];
 			throw new StoreResourceFailedException(
-				'Fout bij het aanmaken gebruiker', $user->errors());
+				'Fout bij het aanmaken gebruiker',
+				['messages' => array_merge($userError, $subUserError)]);
+		}
 
-		$attributes = Input::all();
-		$attributes['password'] = Hash::make(Input::get('password'), ['rounds' => 12]);
-
-		if($this->userRepository->create($attributes))
-			return $this->created(); // HTTP Status Code 201 "Created"
-		else
+		if($this->userRepository->createParents(Input::all())) {
+			return $this->created();
+		} else {
 			throw new StoreResourceFailedException(
-				'Fout bij het aanmaken gebruiker');
+					'Fout bij het aanmaken gebruiker');
+		}
 	}
 
+	public function storeMonitor() {
+		$user = new User; $monitor = new Monitor;
+		if(!($user->validate(Input::all()) & $monitor->validate(Input::all()))) {
+			$userError = is_object($user->errors()) ? $user->errors()->toArray() : [];
+			$subUserError = is_object($monitor->errors()) ? $monitor->errors()->toArray() : [];
+			throw new StoreResourceFailedException(
+				'Fout bij het aanmaken gebruiker',
+				['messages' => array_merge($userError, $subUserError)]);
+		}
+
+		if($this->userRepository->createMonitor(Input::all())) {
+			return $this->created();
+		} else {
+			throw new StoreResourceFailedException(
+					'Fout bij het aanmaken gebruiker');
+		}
+	}
+
+	public function storeAdmin() {
+		$user = new User; $admin = new Admin;
+		if(!($user->validate(Input::all()) & $admin->validate(Input::all()))) {
+			$userError = is_object($user->errors()) ? $user->errors()->toArray() : [];
+			$subUserError = is_object($admin->errors()) ? $admin->errors()->toArray() : [];
+			throw new StoreResourceFailedException(
+				'Fout bij het aanmaken gebruiker',
+				['messages' => array_merge($userError, $subUserError)]);
+		}
+
+		if($this->userRepository->createAdmin(Input::all())) {
+			return $this->created();
+		} else {
+			throw new StoreResourceFailedException(
+					'Fout bij het aanmaken gebruiker');
+		}
+	}
 
 	/**
 	 * Display the specified resource.

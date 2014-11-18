@@ -4,11 +4,10 @@
 	"keywords": ["framework", "laravel"],
 	"license": "MIT",
 	"require": {
-		"laravel/framework": "4.2.*",
-		"dingo/api": "dev-master#7a1f798972635903bf9b26c4a76e97e7abb37358",
-		"lucadegasperi/oauth2-server-laravel": "3.x-dev#2035cfce90bfba887e5ba16892a930ef1c5f3c24",
-		"barryvdh/laravel-cors": "0.2.x",
-		"league/oauth2-server": "4.0.x-dev#736a7b95eb20fc71ab4bdbb9a5c7adbd8b0f306b"
+		"laravel/framework": "~4.2.0",
+		"dingo/api": "master-dev",
+		"lucadegasperi/oauth2-server-laravel": "3.*",
+		"barryvdh/laravel-cors": "0.2.x"
 	},
 	"autoload": {
 		"classmap": [

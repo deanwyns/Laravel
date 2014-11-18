@@ -34,9 +34,9 @@ class ValidatableEloquent extends Eloquent {
      */
     public function validate($data, $sometimes = false, $id = '') {
         $tmpRules = $this->rules;
-        if(!empty($id) || $sometimes) {
+        if($sometimes) {
             foreach($this->rules as $key => $value) {
-                if(!empty($id) && strpos($value, '{ID}') !== false) {
+                if(strpos($value, '{ID}') !== false) {
                     $tmpRules[$key] = str_replace('{ID}', $id, $value);
                 }
                 
