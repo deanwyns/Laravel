@@ -4,8 +4,9 @@ use Illuminate\Auth\UserTrait;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
+use Dingo\Api\Transformer\TransformableInterface;
 
-class User extends ValidatableEloquent implements UserInterface, RemindableInterface {
+class User extends ValidatableEloquent implements UserInterface, RemindableInterface, TransformableInterface {
 
 	use UserTrait, RemindableTrait;
 
@@ -27,11 +28,7 @@ class User extends ValidatableEloquent implements UserInterface, RemindableInter
 	 * Fillable attributes
 	 * @var array
 	 */
-	protected $fillable = ['email', 'password', 'first_name_mother',
-							'last_name_mother', 'nrn_mother',
-							'first_name_father', 'last_name_father',
-							'nrn_father',
-							'phone_number'];
+	protected $fillable = ['email', 'password', 'userable_id'];
 
 	/**
 	 * Validation rules for the User model
@@ -48,6 +45,18 @@ class User extends ValidatableEloquent implements UserInterface, RemindableInter
 		 'last_name_father' => 'required_with:first_name_father',
 		 'nrn_father' => 'required_with:first_name_father',
 		 'phone_number' => 'required'];
+
+	public function userable() {
+		return $this->morphTo();
+	}
+
+	public function scopes() {
+		return $this->scopes;
+	}
+
+	public function getTransformer() {
+		return new UserTransformer;
+	}
 
 	public function Children(){
 			return $this -> hasMany('Child');

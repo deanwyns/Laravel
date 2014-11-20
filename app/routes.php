@@ -89,20 +89,28 @@ Route::api(['version' => 'v1'], function() {
 	// te vragen, en die moeten weg, want we werken met puur
 	// een API :-)
 	Route::group(['prefix' => 'user'], function() {
-		Route::get('me', ['uses' => 'UserController@getMe', 'protected' => true]);
-		Route::get('/', ['uses' => 'UserController@index', 'protected' => true]);
+		Route::get('me', ['uses' => 'UserController@getMe', 'protected' => true, 'scopes' => ['parents', 'monitor', 'admin']]);
+		Route::get('/', ['uses' => 'UserController@index', 'protected' => true, 'scopes' => 'admin']);
+		// Dit is de route voor een parents account
+		// Iedereen kan dit aanmaken
 		Route::post('/', 'UserController@store');
-		Route::get('/{user}', ['uses' => 'UserController@show', 'protected' => true]);
-		Route::put('/{user}', ['uses' => 'UserController@update', 'protected' => true]);
-		Route::delete('/{user}', ['uses' => 'UserController@destroy', 'protected' => true]);
+		// Dit is de route voor een monitor account
+		// Enkel admins kunnen dit aanmaken
+		Route::post('/monitor', ['uses' => 'UserController@storeMonitor', 'protected' => true, 'scopes' => 'admin']);
+		// Dit is de route voor een admin account
+		// Enkel admins kunnen dit aanmaken
+		Route::post('/admin', ['uses' => 'UserController@storeAdmin', 'protected' => true, 'scopes' => 'admin']);
+		Route::get('/{user}', ['uses' => 'UserController@show', 'protected' => true, 'scopes' => 'admin']);
+		Route::put('/{user}', ['uses' => 'UserController@update', 'protected' => true, 'scopes' => 'admin']);
+		Route::delete('/{user}', ['uses' => 'UserController@destroy', 'protected' => true, 'scopes' => 'admin']);
 	});
 
 	Route::group(['prefix' => 'vacation'], function() {
-		Route::get('/', 'VacationController@index');
-		Route::post('/', ['uses' => 'VacationController@store', 'protected' => true]);
-		Route::get('/{vacation}', 'VacationController@show');
-		Route::put('/{vacation}', ['uses' => 'VacationController@update', 'protected' => true]);
-		Route::delete('/{vacation}', ['uses' => 'VacationController@destroy', 'protected' => true]);
+		Route::get('/', ['uses' => 'VacationController@index', 'scopes' => ['parents', 'monitor', 'admin']]);
+		Route::post('/', ['uses' => 'VacationController@store', 'protected' => true, 'scopes' => 'admin']);
+		Route::get('/{vacation}', ['uses' => 'VacationController@show', 'scopes' => ['parents', 'monitor', 'admin']]);
+		Route::put('/{vacation}', ['uses' => 'VacationController@update', 'protected' => true, 'scopes' => 'admin']);
+		Route::delete('/{vacation}', ['uses' => 'VacationController@destroy', 'protected' => true, 'scopes' => 'admin']);
 	});
 
 	/*Route::group(['prefix' => 'user']), function() {

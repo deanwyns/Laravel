@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Dingo\Api\Routing\Route;
 use Dingo\Api\Auth\AuthorizationProvider;
 use League\OAuth2\Server\Resource;
-use League\OAuth2\Server\Exception\InvalidAccessTokenException;
+use League\OAuth2\Server\Exception\InvalidScopeException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 use LucaDegasperi\OAuth2Server\Authorizer;
@@ -74,12 +74,12 @@ class OAuth2Provider extends AuthorizationProvider
         }
 
         try {
-            $this->validateRouteScopes($route);
-
             $this->authorizer->validateAccessToken($this->httpHeadersOnly);
 
+            $this->validateRouteScopes($route);
+
             return $this->resolveResourceOwner();
-        } catch (InvalidAccessTokenException $exception) {
+        } catch (OAuthException $exception) {
             throw new UnauthorizedHttpException('Bearer', $exception->getMessage(), $exception);
         }
     }
@@ -112,13 +112,14 @@ class OAuth2Provider extends AuthorizationProvider
             return true;
         }
 
+        $u = $this->resolveResourceOwner();
         foreach ($scopes as $scope) {
-            if ($this->authorizer->hasScope($scope)) {
+            if (/*$this->authorizer->hasScope($scope) && */$scope === strtolower(get_class($u->userable))) {
                 return true;
             }
         }
 
-        throw new InvalidAccessTokenException('Access token is not associated with any of the requested scopes.');
+        throw new InvalidScopeException(implode(', ', $scopes));
     }
 
     /**
