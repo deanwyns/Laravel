@@ -37,14 +37,7 @@ class User extends ValidatableEloquent implements UserInterface, RemindableInter
 	protected $rules =
 		['email' => 'required|email|unique:users,email,{ID}',
 		 'password' => 'required|min:6',
-		 'password_confirmed' => 'required_with:password|same:password',
-		 'first_name_mother' => 'required_without:first_name_father',
-		 'last_name_mother' => 'required_with:first_name_mother',
-		 'nrn_mother' => 'required_with:first_name_mother',
-		 'first_name_father' => 'required_without:first_name_mother',
-		 'last_name_father' => 'required_with:first_name_father',
-		 'nrn_father' => 'required_with:first_name_father',
-		 'phone_number' => 'required'];
+		 'password_confirmed' => 'required_with:password|same:password'];
 
 	public function userable() {
 		return $this->morphTo();
@@ -56,9 +49,5 @@ class User extends ValidatableEloquent implements UserInterface, RemindableInter
 
 	public function getTransformer() {
 		return new UserTransformer;
-	}
-
-	public function Children(){
-			return $this -> hasMany('Child');
 	}
 }
