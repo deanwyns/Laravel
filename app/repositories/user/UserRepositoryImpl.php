@@ -61,5 +61,5 @@ class UserRepositoryImpl extends AbstractRepository implements UserRepository {
 
 		return false;
 	}
-
+	
 }
