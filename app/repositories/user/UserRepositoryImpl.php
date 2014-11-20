@@ -17,7 +17,7 @@ class UserRepositoryImpl extends AbstractRepository implements UserRepository {
 
 		return $query->where('username', '=', $username)->first();
 	}
-
+	
 	public function createParents($attributes) {
 		$parents = Parents::create($attributes);
 		if($parents) {
@@ -61,5 +61,9 @@ class UserRepositoryImpl extends AbstractRepository implements UserRepository {
 
 		return false;
 	}
+<<<<<<< HEAD
 	
+=======
+	/*getChildren*/
+>>>>>>> 7fdf1f8d8b50f59a4e66ea0053a1d377b230fd3a
 }
