@@ -48,4 +48,8 @@ class User extends ValidatableEloquent implements UserInterface, RemindableInter
 		 'last_name_father' => 'required_with:first_name_father',
 		 'nrn_father' => 'required_with:first_name_father',
 		 'phone_number' => 'required'];
+
+	public function Children(){
+			return $this -> hasMany('Child');
+	}
 }

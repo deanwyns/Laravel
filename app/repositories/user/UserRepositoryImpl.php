@@ -17,5 +17,9 @@ class UserRepositoryImpl extends AbstractRepository implements UserRepository {
 
 		return $query->where('username', '=', $username)->first();
 	}
+	/*
+	public function getChildren
 
+	
+	*/
 }

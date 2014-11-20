@@ -1,34 +1,27 @@
 <?php
-
 use Dingo\Api\Routing\ControllerTrait;
 use Dingo\Api\Exception\DeleteResourceFailedException;
 use Dingo\Api\Exception\UpdateResourceFailedException;
 use Dingo\Api\Exception\StoreResourceFailedException;
 use Dingo\Api\Http\ResponseBuilder;
-
 class UserController extends \APIBaseController {
-
 	// Dit zorgt ervoor dat je voorgedefinieerde
 	// variabelen van de dingo/api package kunt
 	// gebruiken.
 	// Bijvoorbeeld $auth waarmee je de user kunt opvragen:
 	// $this->auth->user();
 	use ControllerTrait;
-
 	/**
 	 * User Repository
 	 * @var UserRepositoryImpl
 	 */
 	protected $userRepository;
-
 	/**
 	 * Constructor
 	 */
 	public function __construct(UserRepository $userRepository) {
 		$this->userRepository = $userRepository;
 	}
-
-
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -38,8 +31,6 @@ class UserController extends \APIBaseController {
 	{
 		return $this->userRepository->all();
 	}
-
-
 	/**
 	 * Store a newly created resource in storage.
 	 *
@@ -47,22 +38,53 @@ class UserController extends \APIBaseController {
 	 */
 	public function store()
 	{
-		$user = new User;
-		if(!$user->validate(Input::all()))
+		$user = new User; $parents = new Parents;
+		if(!($user->validate(Input::all()) & $parents->validate(Input::all()))) {
+			$userError = is_object($user->errors()) ? $user->errors()->toArray() : [];
+			$subUserError = is_object($parents->errors()) ? $parents->errors()->toArray() : [];
 			throw new StoreResourceFailedException(
-				'Fout bij het aanmaken gebruiker', $user->errors());
-
-		$attributes = Input::all();
-		$attributes['password'] = Hash::make(Input::get('password'), ['rounds' => 12]);
-
-		if($this->userRepository->create($attributes))
-			return $this->created(); // HTTP Status Code 201 "Created"
-		else
+				'Fout bij het aanmaken gebruiker',
+				['messages' => array_merge($userError, $subUserError)]);
+		}
+		if($this->userRepository->createParents(Input::all())) {
+			return $this->created();
+		} else {
 			throw new StoreResourceFailedException(
-				'Fout bij het aanmaken gebruiker');
+					'Fout bij het aanmaken gebruiker');
+		}
 	}
-
-
+	public function storeMonitor() {
+		$user = new User; $monitor = new Monitor;
+		if(!($user->validate(Input::all()) & $monitor->validate(Input::all()))) {
+			$userError = is_object($user->errors()) ? $user->errors()->toArray() : [];
+			$subUserError = is_object($monitor->errors()) ? $monitor->errors()->toArray() : [];
+			throw new StoreResourceFailedException(
+				'Fout bij het aanmaken gebruiker',
+				['messages' => array_merge($userError, $subUserError)]);
+		}
+		if($this->userRepository->createMonitor(Input::all())) {
+			return $this->created();
+		} else {
+			throw new StoreResourceFailedException(
+					'Fout bij het aanmaken gebruiker');
+		}
+	}
+	public function storeAdmin() {
+		$user = new User; $admin = new Admin;
+		if(!($user->validate(Input::all()) & $admin->validate(Input::all()))) {
+			$userError = is_object($user->errors()) ? $user->errors()->toArray() : [];
+			$subUserError = is_object($admin->errors()) ? $admin->errors()->toArray() : [];
+			throw new StoreResourceFailedException(
+				'Fout bij het aanmaken gebruiker',
+				['messages' => array_merge($userError, $subUserError)]);
+		}
+		if($this->userRepository->createAdmin(Input::all())) {
+			return $this->created();
+		} else {
+			throw new StoreResourceFailedException(
+					'Fout bij het aanmaken gebruiker');
+		}
+	}
 	/**
 	 * Display the specified resource.
 	 *
@@ -73,7 +95,6 @@ class UserController extends \APIBaseController {
 	{
 		return $user;
 	}
-
 	/**
 	 * Display the authenticated user
 	 * 
@@ -82,7 +103,6 @@ class UserController extends \APIBaseController {
 	public function getMe() {
 		return $this->auth->user();
 	}
-
 	/**
 	 * Update the specified resource in storage.
 	 *
@@ -94,17 +114,13 @@ class UserController extends \APIBaseController {
 		if(!$user->validate(Input::all(), true, $user->id))
 			throw new UpdateResourceFailedException(
 				'Fout bij het updaten gebruiker', $user->errors());
-
 		if($user->update(Input::all()))
 			return $user;
 		else
 			throw new UpdateResourceFailedException(
 				'Fout bij het updaten gebruiker');
-
 		return $user;
 	}
-
-
 	/**
 	 * Remove the specified resource from storage.
 	 *
@@ -117,15 +133,12 @@ class UserController extends \APIBaseController {
 			$response = new ResponseBuilder(null);
 			// HTTP Status Code 200 "OK"
 			$response->setStatusCode(200);
-
 			return $response; 
 		} else
 			throw new DeleteResourceFailedException(
 				'Fout bij het verwijderen gebruiker');
 	}
-
 	public function missingMethod($parameters = []) {
 	    return $this->errorNotFound();
 	}
-
 }

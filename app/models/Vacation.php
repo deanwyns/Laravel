@@ -35,6 +35,7 @@ class Vacation extends ValidatableEloquent {
 
 		//timestamps zijn niet nodig voor deze 'tabel'
 		public $timestamps = false;
+
 /*
 // niet relevant tot de andere tabellen zijn geïmplementeerd
 	public function photo(){
