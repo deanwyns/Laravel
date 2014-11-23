@@ -141,4 +141,8 @@ class UserController extends \APIBaseController {
 	public function missingMethod($parameters = []) {
 	    return $this->errorNotFound();
 	}
+
+	public function getChildren(){
+		return $userRepository->getChildren($this->auth->user());
+	}
 }

@@ -61,5 +61,9 @@ class UserRepositoryImpl extends AbstractRepository implements UserRepository {
 
 		return false;
 	}
-	/*getChildren*/
+
+	public function getChildren($user){
+		$subject = $this->getByUsername($user->username);
+		return $subject->children; 
+	}
 }

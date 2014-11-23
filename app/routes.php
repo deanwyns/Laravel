@@ -103,6 +103,15 @@ Route::api(['version' => 'v1'], function() {
 		Route::get('/{user}', ['uses' => 'UserController@show', 'protected' => true, 'scopes' => 'admin']);
 		Route::put('/{user}', ['uses' => 'UserController@update', 'protected' => true, 'scopes' => 'admin']);
 		Route::delete('/{user}', ['uses' => 'UserController@destroy', 'protected' => true, 'scopes' => 'admin']);
+		//geef alle kinderen terug die horen bij een gebruiker.
+		Route::get('/me/children',['uses'=> 'UserController@getChildren', 'scopes' => ['parents', 'monitor', 'admin']]);
+
+
+	});
+	
+	Route::group(['prefix' => 'child'], function(){
+		Route::get('/{child}',['uses'=> 'ChildController@show', 'scopes' => 'admin']);
+		
 	});
 
 	Route::group(['prefix' => 'vacation'], function() {
@@ -122,4 +131,5 @@ Route::api(['version' => 'v1'], function() {
 });
 
 // Voorlopig even met id's werken tot we wat meer hebben...
+Route::model('child', 'Child');
 Route::model('vacation', 'Vacation');

@@ -12,9 +12,9 @@ class Child extends ValidatableEloquent {
 		'lastName' => 'required|max:55',
 		'streetName' => 'required| max: 100',
 		'houseNumber' => 'required|max: 5',
-		'city' => 'required| max: 55'
-		'nrn' => 'required| max: 15'
-
+		'city' => 'required| max: 55',
+		'nrn' => 'required| max: 15',
+		'user_id' => 'required'
 	];
 
 	public function parent(){
