@@ -105,12 +105,18 @@ Route::api(['version' => 'v1'], function() {
 		Route::delete('/{user}', ['uses' => 'UserController@destroy', 'protected' => true, 'scopes' => 'admin']);
 		//geef alle kinderen terug die horen bij een gebruiker.
 		Route::get('/me/children',['uses'=> 'UserController@getChildren', 'scopes' => ['parents', 'monitor', 'admin']]);
+		//CRUD voor kindenen -> een gebruiker kan enkel deze functies gebruiken voor zijn eigen kinderen dus /me
+		Route::post('/me/children', ['uses' => 'VacationController@store', 'protected' => true, 'scopes' => 'admin']);
+		Route::get('/me/{child}', ['uses' => 'VacationController@show', 'scopes' => ['parents', 'monitor', 'admin']]);
+		Route::put('/me/{child}', ['uses' => 'VacationController@update', 'protected' => true, 'scopes' => 'admin']);
+		Route::delete('/me/{child}', ['uses' => 'VacationController@destroy', 'protected' => true, 'scopes' => 'admin']);
 
 
 	});
 	
 	Route::group(['prefix' => 'child'], function(){
 		Route::get('/{child}',['uses'=> 'ChildController@show', 'scopes' => 'admin']);
+
 		
 	});
 
