@@ -33,8 +33,14 @@ class Vacation extends ValidatableEloquent {
 		'endDate' => 'required'
 	];
 
+<<<<<<< HEAD
+	public function entries() {
+		return $this->hasMany('VacationEntry');
+	}
+=======
 		//timestamps zijn niet nodig voor deze 'tabel'
 		public $timestamps = false;
+>>>>>>> 7fdf1f8d8b50f59a4e66ea0053a1d377b230fd3a
 
 /*
 // niet relevant tot de andere tabellen zijn geïmplementeerd

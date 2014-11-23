@@ -111,14 +111,22 @@ class UserController extends \APIBaseController {
 	 */
 	public function update($user)
 	{
-		if(!$user->validate(Input::all(), true, $user->id))
+		$subtype = $user->userable;
+		if(!($user->validate(Input::all(), true, $user->id) & $subtype->validate(Input::all(), true, $user->id))) {
+			$userError = is_object($user->errors()) ? $user->errors()->toArray() : [];
+			$subUserError = is_object($subtype->errors()) ? $subtype->errors()->toArray() : [];
 			throw new UpdateResourceFailedException(
-				'Fout bij het updaten gebruiker', $user->errors());
-		if($user->update(Input::all()))
+				'Fout bij aanpassen gebruiker',
+				['messages' => array_merge($userError, $subUserError)]);
+		}
+
+		if($user->userable->update(Input::all()) & $user->update(Input::all())) {
 			return $user;
-		else
+		} else {
 			throw new UpdateResourceFailedException(
-				'Fout bij het updaten gebruiker');
+					'Fout bij aanpassen gebruiker');
+		}
+
 		return $user;
 	}
 	/**

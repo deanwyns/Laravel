@@ -28,4 +28,8 @@ class Parents extends ValidatableEloquent {
 	public function scopes() {
 		return $this->scopes;
 	}
+
+	public function children(){
+		return $this->hasMany('Child');
+	}
 }
