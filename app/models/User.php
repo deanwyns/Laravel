@@ -51,10 +51,7 @@ class User extends ValidatableEloquent implements UserInterface, RemindableInter
 		return new UserTransformer;
 	}
 
-
 	public function children(){
 			return $this -> hasMany('Child');
 	}
-
-	origin/master
 }
