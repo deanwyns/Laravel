@@ -88,7 +88,7 @@ class VacationController extends \APIBaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($vakantie)
+	public function destroy($vacation)
 	{
 		if($vacation->delete()) {
 			$response = new ResponseBuilder(null);
@@ -102,6 +102,10 @@ class VacationController extends \APIBaseController {
 
 	public function missingMethod($parameters = []) {
 	    return $this->errorNotFound();
+	}
+
+	public function showRegistrations($vacation){
+		return $vacation->registrations();
 	}
 
 }

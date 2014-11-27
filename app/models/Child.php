@@ -17,9 +17,12 @@ class Child extends ValidatableEloquent {
 		'user_id' => 'required'
 	];
 
+	public function registrations(){
+		return $this->hasMany('Registration');
+	}
+
 	public function parent(){
 		return $this->belongsTo('User');
 	}
-
 		public $timestamps = false;
 }

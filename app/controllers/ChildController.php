@@ -4,7 +4,7 @@ class ChildController extends \APIBaseController {
 
 	protected $childRepository;
 
-	public function __construct(VacationRepository $childRepository){
+	public function __construct(ChildRepository $childRepository){
 		$this->childRepository = $childRepository;
 	}
 
@@ -51,6 +51,10 @@ class ChildController extends \APIBaseController {
 		} else
 			throw new DeleteResourceFailedException(
 				'Fout bij het verwijderen van het kind');
+	}
+
+	public function showRegistrations($child){
+		return $child->registrations();
 	}
 
 	public function missingMethod($parameters = []) {

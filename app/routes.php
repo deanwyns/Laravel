@@ -106,18 +106,23 @@ Route::api(['version' => 'v1'], function() {
 		//geef alle kinderen terug die horen bij een gebruiker.
 		Route::get('/me/children',['uses'=> 'UserController@getChildren', 'scopes' => ['parents', 'monitor', 'admin']]);
 		//CRUD voor kindenen -> een gebruiker kan enkel deze functies gebruiken voor zijn eigen kinderen dus /me
-		Route::post('/me/children', ['uses' => 'VacationController@store', 'protected' => true, 'scopes' => ['parents', 'monitor', 'admin']]);
-		Route::get('/me/{child}', ['uses' => 'VacationController@show', 'scopes' => ['parents', 'monitor', 'admin']]);
-		Route::put('/me/{child}', ['uses' => 'VacationController@update', 'protected' => true, 'scopes' => 'admin']);
-		Route::delete('/me/{child}', ['uses' => 'VacationController@destroy', 'protected' => true, 'scopes' => 'admin']);
+		Route::post('/me/children', ['uses' => 'ChildController@store', 'protected' => true, 'scopes' => ['parents', 'monitor', 'admin']]);
+		Route::get('/me/{child}', ['uses' => 'ChildController@show', 'scopes' => ['parents', 'monitor', 'admin']]);
+		Route::put('/me/{child}', ['uses' => 'ChildController@update', 'protected' => true, 'scopes' => 'admin']);
+		Route::delete('/me/{child}', ['uses' => 'ChildController@destroy', 'protected' => true, 'scopes' => 'admin']);
 
+		Route::get('/me/{child}/registrations', ['uses' => 'ChildController@showRegistrations', 'scopes' => ['parents', 'monitor', 'admin']] );
+
+		//CRUD voor inschrijvingen
+		Route::post('/me/{child}/register', ['uses' => 'RegistrationController@store', 'protected' => true, 'scopes' => ['parents', 'monitor', 'admin']]);
+		Route::get('/me/{registration}', ['uses' => 'RegistrationController@show', 'scopes' => ['parents', 'monitor', 'admin']]);
+		Route::put('/me/{registration}', ['uses' => 'RegistrationController@update', 'protected' => true, 'scopes' => 'admin']);
+		Route::delete('/me/{registration}', ['uses' => 'RegistrationController@destroy', 'protected' => true, 'scopes' => 'admin']);
 
 	});
 	
 	Route::group(['prefix' => 'child'], function(){
 		Route::get('/{child}',['uses'=> 'ChildController@show', 'scopes' => 'admin']);
-
-		
 	});
 
 	Route::group(['prefix' => 'vacation'], function() {
@@ -126,6 +131,7 @@ Route::api(['version' => 'v1'], function() {
 		Route::get('/{vacation}', ['uses' => 'VacationController@show', 'scopes' => ['parents', 'monitor', 'admin']]);
 		Route::put('/{vacation}', ['uses' => 'VacationController@update', 'protected' => true, 'scopes' => 'admin']);
 		Route::delete('/{vacation}', ['uses' => 'VacationController@destroy', 'protected' => true, 'scopes' => 'admin']);
+		Route::get('/{vacation}/registrations',['uses' => 'VacationController@showRegistrations', 'protected' => true, 'scopes' => 'admin']);
 	});
 
 	/*Route::group(['prefix' => 'user']), function() {
@@ -139,3 +145,4 @@ Route::api(['version' => 'v1'], function() {
 // Voorlopig even met id's werken tot we wat meer hebben...
 Route::model('child', 'Child');
 Route::model('vacation', 'Vacation');
+Route::model('registration', 'Registration');

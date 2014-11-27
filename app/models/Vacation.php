@@ -33,8 +33,8 @@ class Vacation extends ValidatableEloquent {
 		'endDate' => 'required'
 	];
 
-	public function entries() {
-		return $this->hasMany('VacationEntry');
+	public function registrations() {
+		return $this->hasMany('Registration');
 	}
 	
 /*
