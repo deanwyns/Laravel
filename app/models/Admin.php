@@ -3,9 +3,9 @@
 class Admin extends ValidatableEloquent {
 	protected $table = 'users_admins';
 
-	protected $scopes =
-		['user.public', 'user.admin'];
-
+	protected $fillable =
+		[];
+		
 	public function user() {
 		return $this->morphOne('User', 'userable');
 	}
