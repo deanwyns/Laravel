@@ -18,16 +18,16 @@ class Vacation extends ValidatableEloquent {
 	protected $rules = [
 		'title' => 'required|max:140|unique:vacations,title,{ID}',
 		'description' => 'required|max: 5000',
-		'promoText' => 'max: 5000',
+		'promoText' => 'required|max: 5000',
 		'location' => 'required|max:280',
 		'ageFrom' => 'digits_between:1,2',
 		'ageTo' => 'digits_between:1,2',
 		'transportation' => 'max: 280',
-		'maxParticipants' => 'required|numeric|digits:3',
+		'maxParticipants' => 'required|numeric|digits_between:1,3',
 		// Regex voor decimal met max 2 cijfers na komma. Kun je vervangen door eigen gemaakte validatie regel
-		'baseCost' => 'required|regex:/\d{0,}(\.\d{1,2})?/',
-		'oneBmMemberCost' => 'required|regex:/\d{0,}(\.\d{1,2})?/',
-		'twoBmMemberCost' => 'required|regex:/\d{0,}(\.\d{1,2})?/',
+		'baseCost' => 'required|regex:/^\€?([1-9]{1}[0-9]{0,2}(\,[0-9]{3})*(\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\.[0-9]{0,2})?|0(\.[0-9]{0,2})?|(\.[0-9]{1,2})?)$/',
+		'oneBmMemberCost' => 'required|regex:/^\€?([1-9]{1}[0-9]{0,2}(\,[0-9]{3})*(\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\.[0-9]{0,2})?|0(\.[0-9]{0,2})?|(\.[0-9]{1,2})?)$/',
+		'twoBmMemberCost' => 'required|regex:/^\€?([1-9]{1}[0-9]{0,2}(\,[0-9]{3})*(\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\.[0-9]{0,2})?|0(\.[0-9]{0,2})?|(\.[0-9]{1,2})?)$/',
 		'taxDeductable' => 'required',
 		'beginDate' => 'required',
 		'endDate' => 'required'
