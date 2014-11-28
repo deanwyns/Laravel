@@ -151,6 +151,6 @@ class UserController extends \APIBaseController {
 	}
 
 	public function getChildren(){
-		return $userRepository->getChildren($this->auth->user());
+		return $this->userRepository->getChildren($this->auth->user());
 	}
 }

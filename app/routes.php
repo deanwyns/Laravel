@@ -109,9 +109,9 @@ Route::api(['version' => 'v1'], function() {
 		Route::post('/me/children', ['uses' => 'ChildController@store', 'protected' => true, 'scopes' => ['parents', 'monitor', 'admin']]);
 		Route::get('/me/{child}', ['uses' => 'ChildController@show', 'scopes' => ['parents', 'monitor', 'admin']]);
 		Route::put('/me/{child}', ['uses' => 'ChildController@update', 'protected' => true, 'scopes' => 'admin']);
-		Route::delete('/me/{child}', ['uses' => 'ChildController@destroy', 'protected' => true, 'scopes' => 'admin']);
+		Route::delete('/me/{child}', ['uses' => 'ChildController@destroy', 'protected' => true, 'scopes' => ['parents', 'monitor', 'admin']]);
 
-		Route::get('/me/{child}/registrations', ['uses' => 'ChildController@showRegistrations', 'scopes' => ['parents', 'monitor', 'admin']] );
+		Route::get('/me/{child}/registrations', ['uses' => 'ChildController@showRegistrations', 'scopes' => ['parents', 'admin']] );
 
 		//CRUD voor inschrijvingen
 		Route::post('/me/{child}/register', ['uses' => 'RegistrationController@store', 'protected' => true, 'scopes' => ['parents', 'monitor', 'admin']]);
