@@ -41,7 +41,7 @@ class ChildController extends \APIBaseController {
 				'Fout bij het updaten van het kind', $child->errors());
 
 		if($child->update(Input::all()))
-			return $vacation;
+			return $child;
 		else
 			throw new UpdateResourceFailedException(
 				'Fout bij het updaten van het kind');

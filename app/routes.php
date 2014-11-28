@@ -108,7 +108,7 @@ Route::api(['version' => 'v1'], function() {
 		//CRUD voor kindenen -> een gebruiker kan enkel deze functies gebruiken voor zijn eigen kinderen dus /me
 		Route::post('/me/children', ['uses' => 'ChildController@store', 'protected' => true, 'scopes' => ['parents', 'monitor', 'admin']]);
 		Route::get('/me/{child}', ['uses' => 'ChildController@show', 'scopes' => ['parents', 'monitor', 'admin']]);
-		Route::put('/me/{child}', ['uses' => 'ChildController@update', 'protected' => true, 'scopes' => 'admin']);
+		Route::put('/me/{child}', ['uses' => 'ChildController@update', 'protected' => true, 'scopes' => ['parents', 'admin']]);
 		Route::delete('/me/{child}', ['uses' => 'ChildController@destroy', 'protected' => true, 'scopes' => ['parents', 'monitor', 'admin']]);
 
 		Route::get('/me/{child}/registrations', ['uses' => 'ChildController@showRegistrations', 'scopes' => ['parents', 'admin']] );
