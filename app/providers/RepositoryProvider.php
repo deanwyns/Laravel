@@ -17,6 +17,9 @@ class RepositoryProvider extends ServiceProvider {
 		$this->app->bind('\ChildRepository', function() {
 			return new \ChildRepositoryImpl(new \Child);
 		});		
+		$this->app->bind('\RegistrationRepository', function() {
+			return new \RegistrationRepositoryImpl(new \Registration);
+		});		
 	}
 
 }

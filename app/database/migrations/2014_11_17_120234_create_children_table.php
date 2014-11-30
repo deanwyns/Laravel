@@ -19,6 +19,7 @@ class CreateChildrenTable extends Migration {
 			$table->string('streetName');
 			$table->string('houseNumber');
 			$table->string('city');
+			$table->string('postalCode');
 			$table->string('nrn'); //national registry number
 
 			$table->integer('parents_id')->unsigned();

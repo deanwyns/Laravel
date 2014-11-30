@@ -4,11 +4,13 @@ class Registration extends ValidatableEloquent {
 	protected $table = 'registrations';
 
 	protected $fillable = [
-		'isPaid';
+		'isPaid',
+		'child_id',
+		'vacation_id'
 	];
 
 	protected $rules = [
-		'isPaid' => 'required, boolean',
+		'isPaid' => 'required',
 		'child_id' => 'required',
 		'vacation_id' => 'required'
 	];
@@ -22,6 +24,5 @@ class Registration extends ValidatableEloquent {
 		return $this->belongsTo('Vacation');
 	}
 
-	public function 
-		public $timestamps = false;
+	public $timestamps = false;
 }

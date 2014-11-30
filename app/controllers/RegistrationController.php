@@ -1,4 +1,10 @@
 <?php
+use Dingo\Api\Routing\ControllerTrait;
+use Dingo\Api\Exception\DeleteResourceFailedException;
+use Dingo\Api\Exception\UpdateResourceFailedException;
+use Dingo\Api\Exception\StoreResourceFailedException;
+use Dingo\Api\Http\ResponseBuilder;
+
 class RegistrationController extends \APIBaseController {
 	use ControllerTrait;
 
@@ -12,31 +18,33 @@ class RegistrationController extends \APIBaseController {
 		return $registration;
 	}
 
-		public function store()
+		public function store($child)
 	{
 		$registration = new Registration;
-		if(!$registration->validate(Input::all()))
+		$attributes = Input::all();
+		$attributes['child_id'] = $child->id;
+		if(!$registration->validate($attributes))
 			throw new StoreResourceFailedException(
-				'Fout bij het aanmaken van het kind', $registration->errors());
+				'Fout bij het aanmaken van de inschrijving', $registration->errors());
 
-				if($this->registrationRepository->create(Input::all()))
+				if($this->registrationRepository->create($attributes))
 			return $this->created(); // HTTP Status Code 201 "Created"
 		else
 			throw new StoreResourceFailedException(
-				'Fout bij het aanmaken van het kind');	
+				'Fout bij het aanmaken van de inschrijving');	
 	}
 
 	public function update($registration)
 	{
 		if(!$registration->validate(Input::all(), true, $registration->id))
 			throw new UpdateResourceFailedException(
-				'Fout bij het updaten van het kind', $registration->errors());
+				'Fout bij het updaten van de inschrijving', $registration->errors());
 
 		if($registration->update(Input::all()))
-			return $vacation;
+			return $registration;
 		else
 			throw new UpdateResourceFailedException(
-				'Fout bij het updaten van het kind');
+				'Fout bij het updaten van de inschrijving');
 
 		return $registration;
 	}
@@ -50,7 +58,7 @@ class RegistrationController extends \APIBaseController {
 			return $response; 
 		} else
 			throw new DeleteResourceFailedException(
-				'Fout bij het verwijderen van het kind');
+				'Fout bij het verwijderen van de inschrijving');
 	}
 
 	public function missingMethod($parameters = []) {
