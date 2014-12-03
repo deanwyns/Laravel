@@ -4,6 +4,7 @@ use Dingo\Api\Exception\DeleteResourceFailedException;
 use Dingo\Api\Exception\UpdateResourceFailedException;
 use Dingo\Api\Exception\StoreResourceFailedException;
 use Dingo\Api\Http\ResponseBuilder;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class ChildController extends \APIBaseController {
 	use ControllerTrait;
@@ -15,6 +16,13 @@ class ChildController extends \APIBaseController {
 	}
 
 	public function show($child){
+		if($this->auth->user()->userable->id == $child->parents_id)
+			return $child;
+		else
+			throw new UnauthorizedHttpException("U kunt enkel de gegevens van uw eigen kinderen bekijken");
+	}
+
+	public function showToAdmin($child){
 		return $child;
 	}
 
@@ -26,7 +34,7 @@ class ChildController extends \APIBaseController {
 		if(!$child->validate($attributes))
 			throw new StoreResourceFailedException(
 				'Fout bij het aanmaken van het kind', $child->errors());
-		$attributes['parents_id'] = $this->auth->user()->userable->id;	 	
+	 	
 				if($this->childRepository->create($attributes))
 			return $this->created(); // HTTP Status Code 201 "Created"
 		else
