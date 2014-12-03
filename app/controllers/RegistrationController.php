@@ -4,25 +4,53 @@ use Dingo\Api\Exception\DeleteResourceFailedException;
 use Dingo\Api\Exception\UpdateResourceFailedException;
 use Dingo\Api\Exception\StoreResourceFailedException;
 use Dingo\Api\Http\ResponseBuilder;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class RegistrationController extends \APIBaseController {
 	use ControllerTrait;
 
 	protected $registrationRepository;
+	protected $vacationRepository;
+	protected $childRepository;
 
-	public function __construct(RegistrationRepository $registrationRepository){
+	public function __construct(RegistrationRepository $registrationRepository, VacationRepository $vacationRepository, ChildRepository $childRepository){
 		$this->registrationRepository = $registrationRepository;
+		$this->vacationRepository = $vacationRepository;
+		$this->childRepository = $childRepository;
 	}
 
 	public function show($registration){
-		return $registration;
+		//kind waar de inschrijving op van toepassing is ophalen a.d.h.v. id
+		$child = $this->childRepository->getById($registration['child_id']);
+
+		//aanmaken booleans om de leesbaarheid te vergroten
+		$currentUser = $this->auth->user();
+		$isChildFrom = ($currentUser->userable->id == $child->parents_id) && $currentUser->userable_type == 'Parents';
+		$isAdmin = $currentUser->userable_type == "Admin";
+
+		//check of alle voorwaarden zijn voldaan
+		if($isChildFrom || $isAdmin)
+			return $registration;
+		else
+			throw new UnauthorizedHttpException("U kunt enkel de gegevens van de inschrijvingen van uw eigen kinderen bekijken");
 	}
 
 		public function store($child)
 	{
 		$registration = new Registration;
+
+		//child_id uit de URL halen en invoegen in de invoerParameters.
 		$attributes = Input::all();
 		$attributes['child_id'] = $child->id;
+
+		//checken of de vakantie bestaat
+		$vacationId = $attributes['vacation_id'];
+		if($this->vacationRepository->getById($vacationId)== null){
+			throw new StoreResourceFailedException(
+				'De gekozen vakantie bestaat niet!');
+		}
+
+		//valideren van de regels gespecifieerd in het model
 		if(!$registration->validate($attributes))
 			throw new StoreResourceFailedException(
 				'Fout bij het aanmaken van de inschrijving', $registration->errors());

@@ -11,4 +11,10 @@ class VacationRepositoryImpl extends AbstractRepository implements VacationRepos
 
 		return $query->where('title', '=', $title)->first();
 	}
+
+	public function getById($id, array $with = []){
+		$query = $this->make($with);
+		
+		return $query->where('id', '=', $id)->first();
+	}
 }

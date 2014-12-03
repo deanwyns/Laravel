@@ -10,4 +10,10 @@ class ChildRepositoryImpl extends AbstractRepository implements ChildRepository 
 		$query = $this->make($with);
 		return $query->where('id', '=', $id)->first();
 	}
+
+	public function getRegistrations($child){
+		if($child->registrations != null)
+			return $child->registrations;
+		return [];
+	}
 }

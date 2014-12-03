@@ -16,14 +16,11 @@ class ChildController extends \APIBaseController {
 	}
 
 	public function show($child){
-		if($this->auth->user()->userable->id == $child->parents_id)
+		$currentUser = $this->auth->user();
+		if((($currentUser->userable->id == $child->parents_id)&&($currentUser->userable_type == "Parents"))||($currentUser->userable_type == "Admin"))
 			return $child;
 		else
 			throw new UnauthorizedHttpException("U kunt enkel de gegevens van uw eigen kinderen bekijken");
-	}
-
-	public function showToAdmin($child){
-		return $child;
 	}
 
 		public function store()
@@ -70,7 +67,7 @@ class ChildController extends \APIBaseController {
 	}
 
 	public function showRegistrations($child){
-		return $child->registrations();
+		return $this->childRepository->getRegistrations($child);
 	}
 
 	public function missingMethod($parameters = []) {

@@ -18,7 +18,7 @@ class RepositoryProvider extends ServiceProvider {
 			return new \ChildRepositoryImpl(new \Child);
 		});		
 		$this->app->bind('\RegistrationRepository', function() {
-			return new \RegistrationRepositoryImpl(new \Registration);
+			return new \RegistrationRepositoryImpl(new \Registration, new \Vacation, new \Child);
 		});		
 	}
 

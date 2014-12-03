@@ -8,5 +8,7 @@ interface UserRepository {
 	public function createParents($attributes);
 	public function createMonitor($attributes);
 	public function createAdmin($attributes);
+
+	public function getChildren($user);
 	
 }
