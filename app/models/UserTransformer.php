@@ -14,7 +14,8 @@ class UserTransformer extends League\Fractal\TransformerAbstract {
     				'first_name_father' => $subUser->first_name_father,
     				'last_name_father' => $subUser->last_name_father,
     				'nrn_father' => $subUser->nrn_father,
-    				'phone_number' => $subUser->phone_number
+    				'phone_number' => $subUser->phone_number,
+                    'children' => $subUser->children
     			];
     			break;
 
