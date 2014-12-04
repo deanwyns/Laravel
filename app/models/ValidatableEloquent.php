@@ -36,12 +36,24 @@ class ValidatableEloquent extends Eloquent {
         $tmpRules = $this->rules;
         if($sometimes) {
             foreach($this->rules as $key => $value) {
-                if(strpos($value, '{ID}') !== false) {
-                    $tmpRules[$key] = str_replace('{ID}', $id, $value);
-                }
-                
-                if($sometimes) {
-                    $tmpRules[$key] = $tmpRules[$key] . '|sometimes';
+                if(is_array($value)) {
+                    foreach($value as $index => $rule) {
+                        if(strpos($rule, '{ID}') !== false) {
+                            $tmpRules[$key][$index] = str_replace('{ID}', $id, $rule);
+                        }
+
+                        if($sometimes) {
+                            array_push($tmpRules[$key][$index], 'sometimes');
+                        }
+                    }
+                } else {
+                    if(strpos($value, '{ID}') !== false) {
+                        $tmpRules[$key] = str_replace('{ID}', $id, $value);
+                    }
+                    
+                    if($sometimes) {
+                        $tmpRules[$key] = $tmpRules[$key] . '|sometimes';
+                    }
                 }
             }
         }
