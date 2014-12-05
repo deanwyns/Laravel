@@ -18,10 +18,12 @@ class CreateParentsTable extends Migration {
 			$table->string('first_name_mother')->default('');
 			$table->string('last_name_mother')->default('');
 			$table->string('nrn_mother')->default('');
+			$table->integer('address_id_mother');
 
 			$table->string('first_name_father')->default('');
 			$table->string('last_name_father')->default('');
 			$table->string('nrn_father')->default('');
+			$table->integer('address_id_father');
 
 			$table->string('phone_number', 10);
 

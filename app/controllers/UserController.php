@@ -4,8 +4,10 @@ use Dingo\Api\Exception\DeleteResourceFailedException;
 use Dingo\Api\Exception\UpdateResourceFailedException;
 use Dingo\Api\Exception\StoreResourceFailedException;
 use Dingo\Api\Http\ResponseBuilder;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+
 class UserController extends \APIBaseController {
-	// Dit zorgt ervoor dat je voorgedefinieerde
+// Dit zorgt ervoor dat je voorgedefinieerde
 	// variabelen van de dingo/api package kunt
 	// gebruiken.
 	// Bijvoorbeeld $auth waarmee je de user kunt opvragen:
@@ -142,15 +144,27 @@ class UserController extends \APIBaseController {
 			// HTTP Status Code 200 "OK"
 			$response->setStatusCode(200);
 			return $response; 
-		} else
+		} else{
 			throw new DeleteResourceFailedException(
 				'Fout bij het verwijderen gebruiker');
+		}
 	}
+
+
+	public function getChildren(){
+		if($this->auth->user()->userable->children != null)
+			return $user->$this->auth->user()->userable->children;
+		return [];
+	}
+
+	public function getAddress(){
+		return $this->userRepository->getAddress();
+	}
+
 	public function missingMethod($parameters = []) {
 	    return $this->errorNotFound();
 	}
-
-	public function getChildren(){
-		return $this->userRepository->getChildren($this->auth->user());
-	}
 }
+
+
+	

@@ -4,18 +4,16 @@ class Child extends ValidatableEloquent {
 	protected $table = 'children';
 
 	protected $fillable = [
-		'firstName', 'lastName', 'streetName', 'houseNumber','city', 'postalCode', 'nrn', 'parents_id' //nrn = national registry number
+		'first_name', 'last_name', 'adres_id', 'nrn','date_of_birth', 'parents_id' //nrn = national registry number
 	];
 
 	protected $rules = [
-		'firstName' => 'required|max:35',
-		'lastName' => 'required|max:55',
-		'streetName' => 'required| max: 100',
-		'houseNumber' => 'required|max: 5',
-		'city' => 'required| max: 55',
-		'postalCode' => 'required|digits_between:1,4',
+		'first_name' => 'required|max:35',
+		'last_name' => 'required|max:55',
+		'adres_id' => 'required',
 		'nrn' => 'required| max: 15',
-		'parents_id' => 'required'
+		'parents_id' => 'required',
+		'date_of_birth' => 'Required'
 	];
 
 	public function registrations(){
@@ -25,5 +23,10 @@ class Child extends ValidatableEloquent {
 	public function parent(){
 		return $this->belongsTo('User');
 	}
-		public $timestamps = false;
+
+	public function adres(){
+		return $this->hasOne('Address');
+	}
+
+	public $timestamps = false;
 }

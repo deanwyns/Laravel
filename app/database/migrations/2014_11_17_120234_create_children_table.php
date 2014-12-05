@@ -14,17 +14,17 @@ class CreateChildrenTable extends Migration {
 	{
 		Schema::create('children', function(Blueprint $table) {
 			$table->increments('id');
-			$table->string('firstName');
-			$table->string('lastName');
-			$table->string('streetName');
-			$table->string('houseNumber');
-			$table->string('city');
-			$table->string('postalCode');
-			$table->string('nrn'); //national registry number
-
+			$table->string('first_name');
+			$table->string('last_name');
+			$table->integer('adres_id');
+			$table->dateTime('date_of_birth');
 			$table->integer('parents_id')->unsigned();
+			$table->string('nrn'); //national registry number
 		});
 	}
+	/*
+
+	*/
 
 	/**
 	 * Reverse the migrations.
@@ -33,7 +33,7 @@ class CreateChildrenTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('vacations');
+		Schema::drop('children');
 	}
 
 }

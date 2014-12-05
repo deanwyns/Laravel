@@ -19,10 +19,8 @@ class RegistrationController extends \APIBaseController {
 		$this->childRepository = $childRepository;
 	}
 
-	public function show($registration){
-		//kind waar de inschrijving op van toepassing is ophalen a.d.h.v. id
-		$child = $this->childRepository->getById($registration['child_id']);
-
+	//kijkt of het kind is verbonden met de ingelogde gebruiker of dat de ingelogde gebruiker een admin is
+	private function checkForDabbling($child){
 		//aanmaken booleans om de leesbaarheid te vergroten
 		$currentUser = $this->auth->user();
 		$isChildFrom = ($currentUser->userable->id == $child->parents_id) && $currentUser->userable_type == 'Parents';
@@ -30,14 +28,29 @@ class RegistrationController extends \APIBaseController {
 
 		//check of alle voorwaarden zijn voldaan
 		if($isChildFrom || $isAdmin)
-			return $registration;
+			return true;
 		else
-			throw new UnauthorizedHttpException("U kunt enkel de gegevens van de inschrijvingen van uw eigen kinderen bekijken");
+			return false;
+	}
+
+	public function show($registration){
+		//kind waar de inschrijving op van toepassing is ophalen a.d.h.v. id
+		$child = $this->childRepository->getById($registration['child_id']);
+
+		//mag de ingelogde gebruiker het kind zijn gegevens zien?
+		if(!$this->checkForDabbling($child))
+			throw new UnauthorizedHttpException("U kunt enkel de inschrijvingen van uw eigen kinderen bekijken");
+		else
+			return $registration;
 	}
 
 		public function store($child)
 	{
 		$registration = new Registration;
+
+		//mag de ingelogde gebruiker het kind zijn gegevens zien?
+		if(!$this->checkForDabbling($child))
+			throw new UnauthorizedHttpException("U kunt enkel uw eigen kinderen inschrijven");
 
 		//child_id uit de URL halen en invoegen in de invoerParameters.
 		$attributes = Input::all();
@@ -45,7 +58,8 @@ class RegistrationController extends \APIBaseController {
 
 		//checken of de vakantie bestaat
 		$vacationId = $attributes['vacation_id'];
-		if($this->vacationRepository->getById($vacationId)== null){
+		$vacation = $this->vacationRepository->getById($vacationId);
+		if($vacation == null){
 			throw new StoreResourceFailedException(
 				'De gekozen vakantie bestaat niet!');
 		}
@@ -56,11 +70,21 @@ class RegistrationController extends \APIBaseController {
 				'Fout bij het aanmaken van de inschrijving', $registration->errors());
 
 				if($this->registrationRepository->create($attributes))
-			return $this->created(); // HTTP Status Code 201 "Created"
-		else
-			throw new StoreResourceFailedException(
-				'Fout bij het aanmaken van de inschrijving');	
-	}
+				{
+					if($this->increaseParticipants($vacation))
+					return $this->created(); // HTTP Status Code 201 "Created"
+					else 
+						throw new StoreResourceFailedException('Deze vakantie is volgeboekt.');
+				}
+
+				else
+				{
+					throw new StoreResourceFailedException(
+						'Fout bij het aanmaken van de inschrijving');	
+				}
+
+		}
+	
 
 	public function update($registration)
 	{
@@ -87,6 +111,16 @@ class RegistrationController extends \APIBaseController {
 		} else
 			throw new DeleteResourceFailedException(
 				'Fout bij het verwijderen van de inschrijving');
+	}
+
+	public function increaseParticipants($vacation){
+		if($vacation->current_participants < $vacation->max_participants){
+			$vacation->current_particpants+1;
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public function missingMethod($parameters = []) {

@@ -70,6 +70,10 @@ class ChildController extends \APIBaseController {
 		return $this->childRepository->getRegistrations($child);
 	}
 
+	public function getAddress($child){
+		return $child->address_id;
+	}
+
 	public function missingMethod($parameters = []) {
 	    return $this->errorNotFound();
 	}

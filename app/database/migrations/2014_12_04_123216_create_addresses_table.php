@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRegistrationsTable extends Migration {
+class CreateAddressesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,12 @@ class CreateRegistrationsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('registrations', function(Blueprint $table) {
+		Schema::create('addresses', function(Blueprint $table) {
 			$table->increments('id');
-			$table->boolean('isPaid')->default(false);
-			$table->integer('child_id')->unsigned();
-			$table->integer('vacation_id')->unsigned();
+			$table->string('street_name');
+			$table->string('house_number');
+			$table->string('city');
+			$table->string('postalCode');
 		});
 	}
 
@@ -27,6 +28,7 @@ class CreateRegistrationsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('registrations');
+		Schema::drop('addresses');
 	}
+
 }

@@ -7,42 +7,24 @@ class Parents extends ValidatableEloquent {
 		['first_name_mother',
 		'last_name_mother',
 		'nrn_mother',
+		'address_id_mother',
 		'first_name_father',
 		'last_name_father',
 		'nrn_father',
-		'phone_number'];/*,
-		'streetName_mother',
-		'houseNumber_mother',
-		'city_mother',
-		'postalCode_mother',
-
-		'streetName_father,
-		'houseNumber_father,
-		'city_father'
-		'postalCode_father'
-		];*/
+		'address_id_father',
+		'phone_number'];
 
 
 	protected $rules =
 		['first_name_mother' => 'required_without:first_name_father',
 		 'last_name_mother' => 'required_with:first_name_mother',
-		 'nrn_mother' => 'required_with:first_name_mother',
+		 'nrn_mother' => 'required_with:first_name_mother|different:nrn_father|unique:users_parents|unique:users_parents,nrn_mother|unique:children,nrn', // zorgt voor uniek rijksregisternummer
+		 'address_id_mother' => 'required',
 		 'first_name_father' => 'required_without:first_name_mother',
 		 'last_name_father' => 'required_with:first_name_father',
-		 'nrn_father' => 'required_with:first_name_father',
-		 'phone_number' => 'required']; /*,
-		
-		'streetName_mother' => 'required| max: 100',
-		'houseNumber_mother' => 'required|max: 5',
-		'city_mother' => 'required| max: 55',
-		'postalCode_mother' => 'required|digits_between:1,4',
-
-		'streetName_father' => 'required| max: 100',
-		'houseNumber_father' => 'required|max: 5',
-		'city_father' => 'required| max: 55',
-		'postalCode_father' => 'required|digits_between:1,4'
-];*/
-	//bovenstaande code in't geval van dat moeder en vader een verschillend (gedomicilieerd) adres kunnen hebben.
+		 'nrn_father' => 'required_with:first_name_father|different:nrn_mother|unique:users_parents|unique:users_parents,nrn_mother|unique:children,nrn', // zorgt voor uniek rijksregisternummer
+		 'address_id_father' => 'required',
+		 'phone_number' => 'required'];
 
 
 	public function user() {
@@ -55,5 +37,13 @@ class Parents extends ValidatableEloquent {
 
 	public function children(){
 		return $this->hasMany('Child');
+	}
+
+	public function adres_mother(){
+		return $this->hasOne('Address');
+	}
+
+	public function adres_father(){
+		return $this->hasOne('Address');
 	}
 }
