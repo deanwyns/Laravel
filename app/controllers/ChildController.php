@@ -10,9 +10,11 @@ class ChildController extends \APIBaseController {
 	use ControllerTrait;
 
 	protected $childRepository;
+	protected $addressRepository;
 
-	public function __construct(ChildRepository $childRepository){
+	public function __construct(ChildRepository $childRepository, AddressRepository $addressRepository){
 		$this->childRepository = $childRepository;
+		$this->addressRepository = $addressRepository;
 	}
 
 	public function show($child){
@@ -71,7 +73,7 @@ class ChildController extends \APIBaseController {
 	}
 
 	public function getAddress($child){
-		return $child->address_id;
+		return $this->addressRepository->getById($this->childRepository->getAddress($child));
 	}
 
 	public function missingMethod($parameters = []) {

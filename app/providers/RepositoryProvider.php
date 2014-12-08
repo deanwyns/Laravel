@@ -8,7 +8,7 @@ class RepositoryProvider extends ServiceProvider {
 
 	public function register() {
 		$this->app->bind('\UserRepository', function() {
-			return new \UserRepositoryImpl(new \User, new \Parents);
+			return new \UserRepositoryImpl(new \User);
 		});
 		$this->app->bind('\VacationRepository', function() {
 			return new \VacationRepositoryImpl(new \Vacation);
@@ -21,9 +21,6 @@ class RepositoryProvider extends ServiceProvider {
 		});		
 		$this->app->bind('\AddressRepository', function() {
 			return new \AddressRepositoryImpl(new \Address);
-		});	
-		$this->app->bind('\ParentRepository', function() {
-			return new \ParentRepositoryImpl(new \Parents);
 		});	
 	}
 
