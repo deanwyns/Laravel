@@ -166,8 +166,4 @@ Route::api(['version' => 'v1'], function() {
 Route::model('child', 'Child');
 Route::model('vacation', 'Vacation');
 Route::model('registration', 'Registration');
-<<<<<<< HEAD
 Route::model('address', 'Address');
-=======
-Route::model('address','Address');
->>>>>>> 55f87348cb911a50906b08c78ad8a38111dc7a95
