@@ -14,7 +14,7 @@ class CreateRegistrationsTable extends Migration {
 	{
 		Schema::create('registrations', function(Blueprint $table) {
 			$table->increments('id');
-			$table->boolean('isPaid')->default(false);
+			$table->boolean('is_paid')->default(false);
 			$table->integer('child_id')->unsigned();
 			$table->integer('vacation_id')->unsigned();
 		});

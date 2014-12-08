@@ -81,7 +81,6 @@ class VacationController extends \APIBaseController {
 		return $vacation;
 	}
 
-
 	/**
 	 * Remove the specified resource from storage.
 	 *
@@ -98,6 +97,21 @@ class VacationController extends \APIBaseController {
 		} else
 			throw new DeleteResourceFailedException(
 				'Fout bij het verwijderen van een vakantie');
+	}
+
+	public function getVacationAlbum($vacation) {
+		if(empty($vacation->picasa_album_id)) {
+			return [];
+		}
+
+		Laracasa::setAlbum($vacation->picasa_album_id);
+		$result = Laracasa::getAlbum();
+		
+		return $result;
+	}
+
+	public function getAlbums() {
+		return Laracasa::getAlbums();
 	}
 
 	public function missingMethod($parameters = []) {
