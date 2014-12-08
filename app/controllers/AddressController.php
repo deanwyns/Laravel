@@ -34,7 +34,7 @@ class AddressController extends \APIBaseController {
 	 */
 	public function store()
 	{
-		$address = new Adress;
+		$address = new Address;
 		if(!$address->validate(Input::all()))
 			throw new StoreResourceFailedException(
 				'Fout bij het aanmaken van het adres', $address->errors());

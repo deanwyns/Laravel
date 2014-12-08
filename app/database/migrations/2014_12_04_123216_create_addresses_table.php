@@ -17,7 +17,7 @@ class CreateAddressesTable extends Migration {
 			$table->string('street_name');
 			$table->string('house_number');
 			$table->string('city');
-			$table->string('postalCode');
+			$table->string('postal_code');
 		});
 	}
 

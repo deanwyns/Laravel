@@ -39,11 +39,11 @@ class Parents extends ValidatableEloquent {
 		return $this->hasMany('Child');
 	}
 
-	public function adres_mother(){
+	public function address_mother(){
 		return $this->hasOne('Address');
 	}
 
-	public function adres_father(){
+	public function address_father(){
 		return $this->hasOne('Address');
 	}
 }

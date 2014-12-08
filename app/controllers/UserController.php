@@ -24,6 +24,13 @@ class UserController extends \APIBaseController {
 	public function __construct(UserRepository $userRepository) {
 		$this->userRepository = $userRepository;
 	}
+
+	public function getChildren()
+	{
+		throw new UnauthorizedHttpException();
+		return $this->userRepository->getChildren($this->auth->user());
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -151,20 +158,15 @@ class UserController extends \APIBaseController {
 	}
 
 
-	public function getChildren(){
-		if($this->auth->user()->userable->children != null)
-			return $user->$this->auth->user()->userable->children;
-		return [];
-	}
 
-	public function getAddress(){
-		return $this->userRepository->getAddress();
+	public function getAddress()
+	{
+		return $this->userRepository->getAddress($this->auth->user());
 	}
 
 	public function missingMethod($parameters = []) {
 	    return $this->errorNotFound();
 	}
 }
-
 
 	

@@ -114,14 +114,14 @@ Route::api(['version' => 'v1'], function() {
 
 		//geef de inschrijvingen voor een bepaald kind
 		Route::get('/me/{child}/registrations', ['uses' => 'ChildController@showRegistrations', 'scopes' => ['parents', 'admin']] );
-		//geef alle kinderen terug die horen bij de ingelogde gebruiker.
-		Route::get('/me/children',['uses'=> 'UserController@getChildren', 'scopes' => 'parents']);
 		//geef alle informatie betreffende een bepaalde inschrijving
 		Route::get('/me/{registration}/registration', ['uses' => 'RegistrationController@show', 'scopes' => ['parents', 'admin']]);
 		//geef het adres van de moeder en vader terug
-		Route::get('/me/address',['uses' => 'UserController@getAddress', 'scopes' => 'parents']);
+		Route::get('/me/getaddress',['uses' => 'UserController@getAddress', 'scopes' => 'parents']);
 		//geef het adres van een kind
 		Route::get('/me/{child}/address', ['uses' => 'ChildController@getAddress', 'scopes' => 'parents']);
+
+		Route::get('/me/children', ['uses' => 'UserController@getChildren', 'scopes' =>'parents']);
 
 		//CRUD voor inschrijvingen
 		Route::post('/me/{child}/register', ['uses' => 'RegistrationController@store', 'protected' => true, 'scopes' => ['parents', 'admin']]);		
@@ -132,7 +132,7 @@ Route::api(['version' => 'v1'], function() {
 
 	Route::group(['prefix' => 'address'], function(){
 		Route::get('/{address}',['uses'=> 'AddressController@show', 'scopes' => 'admin']);
-		Route::post('/make',['uses => AddressController@store', 'scopes' =>['parents', 'admin']]);
+		Route::post('/make',['uses' => 'AddressController@store', 'scopes' =>['parents', 'admin']]);
 	});
 
 	Route::group(['prefix' => 'child'], function(){
@@ -160,4 +160,4 @@ Route::api(['version' => 'v1'], function() {
 Route::model('child', 'Child');
 Route::model('vacation', 'Vacation');
 Route::model('registration', 'Registration');
-Route::model('address',"Address");
+Route::model('address','Address');

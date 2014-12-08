@@ -16,4 +16,8 @@ class ChildRepositoryImpl extends AbstractRepository implements ChildRepository 
 			return $child->registrations;
 		return [];
 	}
+
+	public function getAddress($child){
+		return $child->address_id;
+	}
 }
