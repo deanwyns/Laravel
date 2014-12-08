@@ -24,12 +24,6 @@ class UserController extends \APIBaseController {
 	public function __construct(UserRepository $userRepository) {
 		$this->userRepository = $userRepository;
 	}
-
-	public function getChildren()
-	{
-		return $this->userRepository->getChildren($this->auth->user());
-	}
-
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -155,7 +149,11 @@ class UserController extends \APIBaseController {
 				'Fout bij het verwijderen gebruiker');
 		}
 	}
-
+	
+	public function getChildren()
+	{
+		return $this->userRepository->getChildren($this->auth->user());
+	}
 
 
 	public function getAddress()
