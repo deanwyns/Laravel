@@ -27,7 +27,6 @@ class UserController extends \APIBaseController {
 
 	public function getChildren()
 	{
-		throw new UnauthorizedHttpException();
 		return $this->userRepository->getChildren($this->auth->user());
 	}
 
