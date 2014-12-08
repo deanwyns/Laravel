@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'debug' => false,
+	'debug' => true,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -131,6 +131,7 @@ return array(
 		'App\Providers\RepositoryProvider',
 
 		'Barryvdh\Cors\CorsServiceProvider',
+		'N0m4dz\Laracasa\LaracasaServiceProvider'
 	),
 
 	/*
@@ -158,6 +159,7 @@ return array(
 	*/
 
 	'aliases' => array(
+		'Laracasa' 			=> 'N0m4dz\Laracasa\Facades\Laracasa',
 
 		'API'               => 'Dingo\Api\Facade\API',
 		'App'               => 'Illuminate\Support\Facades\App',

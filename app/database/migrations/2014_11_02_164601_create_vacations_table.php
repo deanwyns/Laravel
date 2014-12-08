@@ -28,6 +28,8 @@ class CreateVacationsTable extends Migration {
 			$table->decimal('one_bm_memberCost', 6, 2);
 			$table->decimal('two_bm_memberCost', 6, 2);
 
+			$table->string('picasa_album_id')->default('');
+
 			$table->boolean('tax_deductable')->default(false);
 			$table->dateTime('begin_date');
 			$table->dateTime('end_date');

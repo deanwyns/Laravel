@@ -7,7 +7,7 @@
  */
 
 return array(
-    'user' => '',
-    'password' => '',
+    'user' => 'joetzproject@gmail.com',
+    'password' => 'guido123456',
     'album' => ''
 );

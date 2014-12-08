@@ -118,6 +118,7 @@ Route::api(['version' => 'v1'], function() {
 
 
 		//geef de inschrijvingen voor een bepaald kind
+
 		Route::get('/me/{child}/registrations', ['uses' => 'ChildController@showRegistrations', 'protected' => true,'scopes' => ['parents', 'admin']] );
 		//geef alle informatie betreffende een bepaalde inschrijving
 		Route::get('/me/{registration}/registration', ['uses' => 'RegistrationController@show', 'protected' => true,'scopes' => ['parents', 'admin']]);
@@ -131,6 +132,7 @@ Route::api(['version' => 'v1'], function() {
 
 	});
 
+
 	Route::group(['prefix' => 'address'], function(){
 		Route::get('/{address}',['uses'=> 'AddressController@show', 'protected' => true, 'scopes' => 'admin']);
 		Route::post('/make',['uses' => 'AddressController@store', 'protected' => true, 'scopes' =>['parents', 'admin']]);
@@ -141,12 +143,14 @@ Route::api(['version' => 'v1'], function() {
 	});
 
 	Route::group(['prefix' => 'vacation'], function() {
-		Route::get('/', ['uses' => 'VacationController@index', 'protected' => true, 'scopes' => ['parents', 'monitor', 'admin']]);
+		Route::get('albums', 'VacationController@getAlbums');
+		Route::get('{vacation}/photos', 'VacationController@getVacationAlbum');
+		Route::get('/', 'VacationController@index');
 		Route::post('/', ['uses' => 'VacationController@store', 'protected' => true, 'scopes' => 'admin']);
-		Route::get('/{vacation}', ['uses' => 'VacationController@show', 'scopes' => ['parents', 'monitor', 'admin']]);
+		Route::get('/{vacation}', 'VacationController@show');
 		Route::put('/{vacation}', ['uses' => 'VacationController@update', 'protected' => true, 'scopes' => 'admin']);
 		Route::delete('/{vacation}', ['uses' => 'VacationController@destroy', 'protected' => true, 'scopes' => 'admin']);
-		Route::get('/{vacation}/registrations',['uses' => 'VacationController@showRegistrations', 'protected' => true, 'scopes' => 'admin']);
+		Route::get('/{vacation}/registrations', ['uses' => 'VacationController@showRegistrations', 'protected' => true, 'scopes' => 'admin']);
 	});
 
 	/*Route::group(['prefix' => 'user']), function() {
@@ -161,4 +165,4 @@ Route::api(['version' => 'v1'], function() {
 Route::model('child', 'Child');
 Route::model('vacation', 'Vacation');
 Route::model('registration', 'Registration');
-Route::model('address','Address');
+Route::model('address', 'Address');
