@@ -43,10 +43,6 @@ class User extends ValidatableEloquent implements UserInterface, RemindableInter
 		return $this->morphTo();
 	}
 
-	public function scopes() {
-		return $this->scopes;
-	}
-
 	public function getTransformer() {
 		return new UserTransformer;
 	}

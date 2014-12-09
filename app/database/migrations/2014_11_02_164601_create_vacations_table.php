@@ -22,13 +22,14 @@ class CreateVacationsTable extends Migration {
 			$table->tinyInteger('age_from')->default(3);
 			$table->tinyInteger('age_to')->default(30);
 			$table->string('transportation')->default('');
-			$table->Integer('max_participants');
-			$table->Integer('current_participants');
+			$table->integer('max_participants');
+			$table->integer('current_participants');
 			$table->decimal('baseCost', 6, 2); //precisie is 1 met 2 cijfers na de komma mogelijk (dus 0,01)
 			$table->decimal('one_bm_memberCost', 6, 2);
 			$table->decimal('two_bm_memberCost', 6, 2);
 
 			$table->string('picasa_album_id')->default('');
+			$table->integer('category_id')->unsigned();
 
 			$table->boolean('tax_deductable')->default(false);
 			$table->dateTime('begin_date');

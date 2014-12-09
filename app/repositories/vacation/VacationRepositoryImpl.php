@@ -17,4 +17,12 @@ class VacationRepositoryImpl extends AbstractRepository implements VacationRepos
 		
 		return $query->where('id', '=', $id)->first();
 	}
+
+	public function getCategories() {
+		return Category::all();
+	}
+
+	public function createCategory($attributes) {
+		return Category::create($attributes);
+	}
 }

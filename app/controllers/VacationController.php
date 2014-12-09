@@ -114,6 +114,48 @@ class VacationController extends \APIBaseController {
 		return Laracasa::getAlbums();
 	}
 
+	public function getCategories() {
+		return $vacationRepository->getCategories();
+	}
+
+	public function getCategory($category) {
+		return $category;
+	}
+
+	public function postCategory() {
+		$category = new Category;
+		if($category->validate(Input::all)) {
+			return $vacationRepository->createCategory(Input::all());
+		}
+
+		return false;
+	}
+
+	public function updateCategory($category) {
+		if(!$category->validate(Input::all(), true, $category->id))
+			throw new UpdateResourceFailedException(
+				'Fout bij het updaten van de categorie', $category->errors());
+
+		if($category->update(Input::all()))
+			return $category;
+		else
+			throw new UpdateResourceFailedException(
+				'Fout bij het updaten van de categorie');
+
+		return $category;
+	}
+
+	public function deleteCategory($category) {
+		if($category->delete()) {
+			$response = new ResponseBuilder(null);
+			// HTTP Status Code 200 "OK"
+			$response->setStatusCode(200);
+			return $response; 
+		} else
+			throw new DeleteResourceFailedException(
+				'Fout bij het verwijderen van categorie');
+	}
+
 	public function missingMethod($parameters = []) {
 	    return $this->errorNotFound();
 	}

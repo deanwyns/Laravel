@@ -37,6 +37,18 @@ class Vacation extends ValidatableEloquent {
 	public function registrations() {
 		return $this->hasMany('Registration');
 	}
+
+	public function category() {
+		return $this->hasOne('Category');
+	}
+
+	public function likes() {
+		return $this->hasMany('Like');
+	}
+
+	public function getTransformer() {
+		return new VacationTransformer;
+	}
 	
 /*
 // niet relevant tot de andere tabellen zijn geïmplementeerd
