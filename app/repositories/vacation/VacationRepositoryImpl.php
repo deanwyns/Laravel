@@ -18,6 +18,10 @@ class VacationRepositoryImpl extends AbstractRepository implements VacationRepos
 		return $query->where('id', '=', $id)->first();
 	}
 
+	public function getRegistrations($vacation){
+		return $vacation->registrations;
+	}
+
 	public function getCategories() {
 		return Category::all();
 	}

@@ -35,14 +35,14 @@ class SocialNetworkController extends \APIBaseController {
 	public function store()
 	{
 		$attributes = Input::all();
-		$attributes['monitor_id'] = $this->auth->user()->userable->id;
-		$socialNetwork= new SocialNetwork;
-		if(!$socialNetwork->validate(Input::all()))
+		$attributes['monitor_id'] = $this->auth->user()->userable_id;
+		$socialNetwork = new SocialNetwork;
+		if(!$socialNetwork->validate($attributes))
 			throw new StoreResourceFailedException(
 				'Fout bij het aanmaken van het sociaal netwerk', $socialNetwork->errors());
 
 		
-		if($this->socialNetworkRepository->create(Input::all()))
+		if($this->socialNetworkRepository->create($attributes))
 			return $this->created(); // HTTP Status Code 201 "Created"
 		else
 			throw new StoreResourceFailedException(

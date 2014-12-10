@@ -6,5 +6,6 @@ interface VacationRepository {
 	public function getById($id, array $with = []);
 	public function getCategories();
 	public function createCategory($attributes);
+	public function getRegistrations($vacation);
 	
 }

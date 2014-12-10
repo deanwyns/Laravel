@@ -165,7 +165,7 @@ class VacationController extends \APIBaseController {
 	}
 
 	public function showRegistrations($vacation){
-		return $vacation->registrations();
+		return $this->vacationRepository->getRegistrations($vacation);
 	}
 
 }

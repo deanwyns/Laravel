@@ -4,7 +4,7 @@ class SocialNetwork extends ValidatableEloquent {
 	protected $table = 'socialNetworks';
 	
 	protected $fillable =
-		['name', 'link'];
+		['name', 'link', 'monitor_id'];
 
 	protected $rules = [
 		'monitor_id' => 'required',

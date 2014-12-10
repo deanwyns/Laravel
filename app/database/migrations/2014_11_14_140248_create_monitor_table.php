@@ -30,5 +30,4 @@ class CreateMonitorTable extends Migration {
 		Schema::drop('users_monitors');
 	}
 
-
 }

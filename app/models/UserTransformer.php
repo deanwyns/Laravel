@@ -20,7 +20,13 @@ class UserTransformer extends League\Fractal\TransformerAbstract {
     			break;
 
     		case 'monitor':
-
+                $subUserAttributes = [
+                    'monitor_id' => $subUser->id,
+                    'first_name' => $subUser->first_name,
+                    'last_name' => $subUser->last_name,
+                    'telephone' => $subUser->telephone,
+                    'socialNetworks' => $subUser->socialNetwork
+                ];
     			break;
 
     		case 'admin':
