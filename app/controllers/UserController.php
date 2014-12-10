@@ -18,11 +18,13 @@ class UserController extends \APIBaseController {
 	 * @var UserRepositoryImpl
 	 */
 	protected $userRepository;
+	protected $addressRepository;
 	/**
 	 * Constructor
 	 */
-	public function __construct(UserRepository $userRepository) {
+	public function __construct(UserRepository $userRepository, AddressRepository $addressRepository) {
 		$this->userRepository = $userRepository;
+		$this->addressRepository = $addressRepository;
 	}
 	/**
 	 * Display a listing of the resource.
@@ -172,6 +174,7 @@ class UserController extends \APIBaseController {
 		}
 	}
 	
+	//Voor Parents
 	public function getChildren()
 	{
 		return $this->userRepository->getChildren($this->auth->user());
@@ -180,9 +183,20 @@ class UserController extends \APIBaseController {
 
 	public function getAddress()
 	{
-		return $this->userRepository->getAddress($this->auth->user());
+		$address_mother = $this->addressRepository->getById($this->userRepository->getMotherAddress($this->auth->user()));
+		$address_father = $this->addressRepository->getById($this->userRepository->getFatherAddress($this->auth->user()));
+
+		$address_info['address_mother'] = $address_mother;
+		$address_info['address_father'] = $address_father;
+ 		return $address_info;
 	}
 
+	//Voor Monitors
+	public function showMonitor($monitor){
+		return $monitor;
+	}
+
+	//voor alle Users
 	public function missingMethod($parameters = []) {
 	    return $this->errorNotFound();
 	}

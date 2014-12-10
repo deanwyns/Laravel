@@ -68,7 +68,11 @@ class UserRepositoryImpl extends AbstractRepository implements UserRepository {
 		return [];
 	}
 
-	public function getAddress($user){
-		return [$user->userable->address_mother, $user->userable->address_father];
+	public function getMotherAddress($user){
+		return $user->userable->address_id_mother;
+	}
+
+	public function getFatherAddress($user){
+		return $user->userable->address_id_father;
 	}
 }

@@ -16,11 +16,11 @@ class Registration extends ValidatableEloquent {
 	];
 
 	//registered Child => subject that will go on the vacation
-	public function child() { 
+	public function child(){ 
 		return $this->belongsTo('Child');
 	}
 
-	public function vacation() {
+	public function vacation(){
 		return $this->belongsTo('Vacation');
 	}
 

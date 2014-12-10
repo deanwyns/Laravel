@@ -26,6 +26,5 @@ class Child extends ValidatableEloquent {
 
 	/*public function address(){
 		*/
-
 	public $timestamps = false;
 }

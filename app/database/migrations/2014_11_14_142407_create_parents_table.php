@@ -26,8 +26,6 @@ class CreateParentsTable extends Migration {
 			$table->integer('address_id_father');
 
 			$table->string('phone_number', 10);
-
-			$table->timestamps();
 		});
 	}
 

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMonitorTable extends Migration {
+class CreateSocialNetworksTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,11 @@ class CreateMonitorTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('users_monitors', function(Blueprint $table)
-		{
+		Schema::create('socialNetworks', function(Blueprint $table) {
 			$table->increments('id');
-			$table->string('first_name');
-			$table->string('last_name');
+			$table->string('title');
+			$table->string('link');
+			$table->integer('monitor_id');
 		});
 	}
 
@@ -27,8 +27,7 @@ class CreateMonitorTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('users_monitors');
+		Schema::drop('socialNetworks');
 	}
-
 
 }

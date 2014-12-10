@@ -22,6 +22,9 @@ class RepositoryProvider extends ServiceProvider {
 		$this->app->bind('\AddressRepository', function() {
 			return new \AddressRepositoryImpl(new \Address);
 		});	
+		$this->app->bind('\SocialNetworkRepository', function() {
+			return new \SocialNetworkRepositoryImpl(new \SocialNetwork);
+		});	
 	}
 
 }

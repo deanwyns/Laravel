@@ -116,7 +116,6 @@ Route::api(['version' => 'v1'], function() {
 		Route::put('/me/{child}', ['uses' => 'ChildController@update', 'protected' => true, 'scopes' => ['parents', 'admin']]);
 		Route::delete('/me/{child}', ['uses' => 'ChildController@destroy', 'protected' => true, 'scopes' => ['parents', 'admin']]);
 
-
 		//geef de inschrijvingen voor een bepaald kind
 
 		Route::get('/me/{child}/registrations', ['uses' => 'ChildController@showRegistrations', 'protected' => true,'scopes' => ['parents', 'admin']] );
@@ -131,12 +130,22 @@ Route::api(['version' => 'v1'], function() {
 		Route::delete('/me/{registration}/registration', ['uses' => 'RegistrationController@destroy', 'protected' => true, 'scopes' => 'admin']);
 
 		Route::put('/me', ['uses' => 'UserController@updateMe', 'protected' => true, 'scopes' => ['parents', 'monitor', 'admin']]);
+
+		//CRUD voor sociale netwerken
+		Route::post('/me/addSocialNetwork', ['uses' => 'SocialNetworkController@store', 'protected' => true, 'scopes' => ['monitor', 'admin']]);
+		Route::put('/me/{socialNetwork}/socialNetwork', ['uses' => 'SocialNetworkController@update', 'protected' => true, 'scopes' => ['monitor', 'admin']]);
+		Route::delete('/me/{socialNetwork}/socialNetwork', ['uses' => 'SocialNetworkController@destroy', 'protected' => true, 'scopes' => ['monitor', 'admin']]);		
 	});
 
+	Route::group(['prefix' => 'monitor'], function(){
+		Route::get('/{monitor}', ['uses' => 'UserController@showMonitor', 'protected' => true,'scopes' => ['parents', 'monitor', 'admin']]);
+	});
 
 	Route::group(['prefix' => 'address'], function(){
 		Route::get('/{address}',['uses'=> 'AddressController@show', 'protected' => true, 'scopes' => 'admin']);
 		Route::post('/make',['uses' => 'AddressController@store', 'protected' => true, 'scopes' =>['parents', 'admin']]);
+		Route::put('/{address}/update', ['uses' => 'AddressController@update', 'protected' => true, 'scopes' => ['parents', 'admin']]);
+		Route::delete('/{address}/delete', ['uses' => 'AddressController@destroy', 'protected' => true, 'scopes' => ['admin']]);
 	});
 
 	Route::group(['prefix' => 'child'], function(){
@@ -176,4 +185,7 @@ Route::model('child', 'Child');
 Route::model('vacation', 'Vacation');
 Route::model('registration', 'Registration');
 Route::model('address', 'Address');
+Route::model('monitor', 'Monitor');
+Route::model('socialNetwork', 'SocialNetwork');
 Route::model('category', 'Category');
+

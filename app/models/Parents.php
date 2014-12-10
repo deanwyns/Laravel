@@ -31,6 +31,10 @@ class Parents extends ValidatableEloquent {
 		return $this->morphOne('User', 'userable');
 	}
 
+	public function likes() {
+		return $this->hasMany('Like');
+	}
+
 	public function children(){
 		return $this->hasMany('Child');
 	}
@@ -41,9 +45,5 @@ class Parents extends ValidatableEloquent {
 
 	public function address_father(){
 		return $this->hasOne('Address');
-	}
-
-	public function likes() {
-		return $this->hasMany('Like');
 	}
 }
