@@ -26,5 +26,4 @@ class RepositoryProvider extends ServiceProvider {
 			return new \SocialNetworkRepositoryImpl(new \SocialNetwork);
 		});	
 	}
-
 }
