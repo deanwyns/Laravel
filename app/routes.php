@@ -130,6 +130,7 @@ Route::api(['version' => 'v1'], function() {
 		Route::put('/me/{registration}/registration', ['uses' => 'RegistrationController@update', 'protected' => true, 'scopes' => 'admin']);
 		Route::delete('/me/{registration}/registration', ['uses' => 'RegistrationController@destroy', 'protected' => true, 'scopes' => 'admin']);
 
+		Route::put('/me', ['uses' => 'UserController@updateMe', 'protected' => true, 'scopes' => ['parents', 'monitor', 'admin']]);
 	});
 
 

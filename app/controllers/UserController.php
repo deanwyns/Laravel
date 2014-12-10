@@ -131,6 +131,28 @@ class UserController extends \APIBaseController {
 
 		return $user;
 	}
+
+	public function updateMe() {
+		$user = $this->auth->user();
+		$subtype = $user->userable;
+		if(!($user->validate(Input::all(), true, $user->id) & $subtype->validate(Input::all(), true, $user->id))) {
+			$userError = is_object($user->errors()) ? $user->errors()->toArray() : [];
+			$subUserError = is_object($subtype->errors()) ? $subtype->errors()->toArray() : [];
+			throw new UpdateResourceFailedException(
+				'Fout bij aanpassen gebruiker',
+				['messages' => array_merge($userError, $subUserError)]);
+		}
+
+		if($user->userable->update(Input::all()) & $user->update(Input::all())) {
+			return $user;
+		} else {
+			throw new UpdateResourceFailedException(
+					'Fout bij aanpassen gebruiker');
+		}
+
+		return $user;
+	}
+
 	/**
 	 * Remove the specified resource from storage.
 	 *
