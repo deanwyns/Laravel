@@ -132,9 +132,9 @@ Route::api(['version' => 'v1'], function() {
 		Route::put('/me', ['uses' => 'UserController@updateMe', 'protected' => true, 'scopes' => ['parents', 'monitor', 'admin']]);
 
 		//CRUD voor sociale netwerken
-		Route::post('/me/addSocialNetwork', ['uses' => 'SocialNetworkController@store', 'protected' => true, 'scopes' => ['monitor', 'admin']]);
-		Route::put('/me/{socialNetwork}/socialNetwork', ['uses' => 'SocialNetworkController@update', 'protected' => true, 'scopes' => ['monitor', 'admin']]);
-		Route::delete('/me/{socialNetwork}/socialNetwork', ['uses' => 'SocialNetworkController@destroy', 'protected' => true, 'scopes' => ['monitor', 'admin']]);		
+		Route::post('/me/addsocialnetwork', ['uses' => 'SocialNetworkController@store', 'protected' => true, 'scopes' => ['monitor', 'admin']]);
+		Route::put('/me/{socialNetwork}/socialnetwork', ['uses' => 'SocialNetworkController@update', 'protected' => true, 'scopes' => ['monitor', 'admin']]);
+		Route::delete('/me/{socialNetwork}/socialnetwork', ['uses' => 'SocialNetworkController@destroy', 'protected' => true, 'scopes' => ['monitor', 'admin']]);		
 	});
 
 	Route::group(['prefix' => 'monitor'], function(){
