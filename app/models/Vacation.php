@@ -1,4 +1,5 @@
 <?php
+use Dingo\Api\Transformer\TransformableInterface;
 
 class Vacation extends ValidatableEloquent implements TransformableInterface {
 	protected $table = 'vacations';
