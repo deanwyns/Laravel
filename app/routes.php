@@ -162,6 +162,15 @@ Route::api(['version' => 'v1'], function() {
 		Route::get('/{vacation}/registrations', ['uses' => 'VacationController@showRegistrations', 'protected' => true, 'scopes' => 'admin']);
 	});
 
+	Route::group(['prefix' => 'category'], function() {
+		Route::get('/', 'VacationController@getCategories');
+		Route::get('/{category}', 'VacationController@getCategory');
+
+		Route::post('/', ['uses' => 'VacationController@postCategory', 'protected' => true, 'scopes' => 'admin']);
+		Route::put('/{category}', ['uses' => 'VacationController@updateCategory', 'protected' => true, 'scopes' => 'admin']);
+		Route::delete('/{category}', ['uses' => 'VacationController@deleteCategory', 'protected' => true, 'scopes' => 'admin']);
+	});
+
 	/*Route::group(['prefix' => 'user']), function() {
 		Route::post('{user}', )
 	});*/
@@ -177,3 +186,5 @@ Route::model('registration', 'Registration');
 Route::model('address', 'Address');
 Route::model('monitor', 'Monitor');
 Route::model('socialNetwork', 'SocialNetwork');
+Route::model('category', 'Category');
+
