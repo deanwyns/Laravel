@@ -10,6 +10,6 @@ interface UserRepository {
 	public function createAdmin($attributes);
 
 	public function getChildren($user);
-	public function getAddress($user);
-	
+	public function getMotherAddress($user);
+	public function getFatherAddress($user);
 }
