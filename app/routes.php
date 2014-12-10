@@ -117,7 +117,6 @@ Route::api(['version' => 'v1'], function() {
 		Route::delete('/me/{child}', ['uses' => 'ChildController@destroy', 'protected' => true, 'scopes' => ['parents', 'admin']]);
 
 		//geef de inschrijvingen voor een bepaald kind
-
 		Route::get('/me/{child}/registrations', ['uses' => 'ChildController@showRegistrations', 'protected' => true,'scopes' => ['parents', 'admin']] );
 		//geef alle informatie betreffende een bepaalde inschrijving
 		Route::get('/me/{registration}/registration', ['uses' => 'RegistrationController@show', 'protected' => true,'scopes' => ['parents', 'admin']]);
@@ -138,7 +137,8 @@ Route::api(['version' => 'v1'], function() {
 	});
 
 	Route::group(['prefix' => 'monitor'], function(){
-		Route::get('/{monitor}', ['uses' => 'UserController@showMonitor', 'protected' => true,'scopes' => ['parents', 'monitor', 'admin']]);
+		Route::get('/{monitor}', ['uses' => 'UserController@showMonitor', 'protected' => true,'scopes' => ['monitor', 'admin']]);
+		Route::post('/search', ['uses' => 'UserController@searchMonitor', 'protected' => true,'scopes' => ['monitor', 'admin']]);
 	});
 
 	Route::group(['prefix' => 'address'], function(){

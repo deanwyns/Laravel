@@ -19,6 +19,5 @@ class Monitor extends ValidatableEloquent {
 	public function user() {
 		return $this->morphOne('User', 'userable');
 	}
-
 	public $timestamps = false;
 }

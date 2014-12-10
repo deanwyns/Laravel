@@ -16,7 +16,7 @@ class CreateChildrenTable extends Migration {
 			$table->increments('id');
 			$table->string('first_name');
 			$table->string('last_name');
-			$table->integer('adres_id');
+			$table->integer('address_id');
 			$table->dateTime('date_of_birth');
 			$table->integer('parents_id')->unsigned();
 			$table->string('nrn'); //national registry number

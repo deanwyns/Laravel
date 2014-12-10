@@ -196,6 +196,31 @@ class UserController extends \APIBaseController {
 		return $monitor;
 	}
 
+	//zoeken in monitors
+	public function searchMonitor(){
+		$attributes = Input::All();
+		$searchString = $attributes['search_string'];
+
+		$searchArray = explode(' ', $searchString);
+		$monitors = [];
+
+		foreach ($searchArray as $search)
+		{		
+		$monitorsHelper = DB::table('users_monitors')->Where('first_name', $search)->orWhere('last_name', $search)->get();
+
+
+        array_push($monitors, $monitorsHelper);
+       	}
+
+       	/*$monitorsHelper = $monitors;
+       	$monitors = [];
+       	foreach($monitorsHelper as $i => $value){
+       		$monitorValue = ('Monitor') $value;
+       		array_add($monitors, $Monitor['id'], $value);
+       	}*/
+        return array_unique($monitors[0]);
+        }
+
 	//voor alle Users
 	public function missingMethod($parameters = []) {
 	    return $this->errorNotFound();
