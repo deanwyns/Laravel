@@ -1,6 +1,6 @@
 <?php
 
-class Vacation extends ValidatableEloquent {
+class Vacation extends ValidatableEloquent implements TransformableInterface {
 	protected $table = 'vacations';
 
 	protected $fillable = [
