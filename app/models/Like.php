@@ -1,5 +1,5 @@
 <?php
-class Like extends Eloquent {
+class Like extends ValidatableEloquent {
 	protected $table = 'likes';
 
 	public function user() {

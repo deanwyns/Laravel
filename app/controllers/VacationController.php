@@ -115,7 +115,7 @@ class VacationController extends \APIBaseController {
 	}
 
 	public function getCategories() {
-		return $vacationRepository->getCategories();
+		return $this->vacationRepository->getCategories();
 	}
 
 	public function getCategory($category) {
@@ -124,11 +124,15 @@ class VacationController extends \APIBaseController {
 
 	public function postCategory() {
 		$category = new Category;
-		if($category->validate(Input::all)) {
-			return $vacationRepository->createCategory(Input::all());
-		}
+		if(!$category->validate(Input::all()))
+			throw new StoreResourceFailedException(
+				'Fout bij het aanmaken van de vakantie', $category->errors());
 
-		return false;
+		if($this->vacationRepository->createCategory(Input::all()))
+			return $this->created(); // HTTP Status Code 201 "Created"
+		else
+			throw new StoreResourceFailedException(
+				'Fout bij het aanmaken van de vakantie');
 	}
 
 	public function updateCategory($category) {

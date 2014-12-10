@@ -1,5 +1,5 @@
 <?php
-class Category extends Eloquent {
+class Category extends ValidatableEloquent {
 	protected $tables = 'categories';
 
 	protected $fillable = [
