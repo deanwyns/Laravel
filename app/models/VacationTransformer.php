@@ -6,6 +6,7 @@ class VacationTransformer extends League\Fractal\TransformerAbstract {
         $likes = $vacation->likes()->count();
 
         return [
+            'id' => $vacation->id,
             'title' => $vacation->title,
             'description' => $vacation->description,
             'promo_text' => $vacation->promo_text,

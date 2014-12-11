@@ -16,6 +16,7 @@ class CreateLikeTable extends Migration {
 			$table->increments('id');
 			$table->integer('user_id')->unsigned();
 			$table->integer('vacation_id')->unsigned();
+			$table->timestamps();
 		});
 	}
 
