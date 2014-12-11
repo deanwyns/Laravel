@@ -10,4 +10,5 @@ class RegistrationRepositoryImpl extends AbstractRepository implements Registrat
 		$query = $this->make($with);
 		return $query->where('id', '=', $id)->first();
 	}
+	
 }

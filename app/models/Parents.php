@@ -35,15 +35,15 @@ class Parents extends ValidatableEloquent {
 		return $this->hasMany('Like');
 	}
 
-	public function children(){
+	public function children() {
 		return $this->hasMany('Child');
 	}
 
-	public function address_mother(){
-		return $this->hasOne('Address');
+	public function address_mother() {
+		return $this->belongsTo('Address', 'address_id_mother');
 	}
 
-	public function address_father(){
-		return $this->hasOne('Address');
+	public function address_father() {
+		return $this->belongsTo('Address', 'address_id_father');
 	}
 }

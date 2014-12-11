@@ -43,7 +43,7 @@ class ValidatableEloquent extends Eloquent {
                         }
 
                         if($sometimes) {
-                            array_push($tmpRules[$key][$index], 'sometimes');
+                            array_push($tmpRules[$key], 'sometimes');
                         }
                     }
                 } else {

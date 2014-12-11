@@ -1,6 +1,7 @@
 <?php
+use Dingo\Api\Transformer\TransformableInterface;
 
-class Child extends ValidatableEloquent {
+class Child extends ValidatableEloquent implements TransformableInterface {
 	protected $table = 'children';
 
 	protected $fillable = [
@@ -16,12 +17,20 @@ class Child extends ValidatableEloquent {
 		'date_of_birth' => 'Required'
 	];
 
-	public function registrations(){
+	public function registrations() {
 		return $this->hasMany('Registration');
 	}
 
-	public function parent(){
+	public function parent() {
 		return $this->belongsTo('User');
+	}
+
+	public function address() {
+		return $this->belongsTo('Address');
+	}
+
+	public function getTransformer() {
+		return new ChildTransformer;
 	}
 
 	/*public function address(){

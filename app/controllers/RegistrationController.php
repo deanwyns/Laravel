@@ -33,7 +33,7 @@ class RegistrationController extends \APIBaseController {
 			return false;
 	}
 
-	public function show($registration){
+	public function show($registration) {
 		//kind waar de inschrijving op van toepassing is ophalen a.d.h.v. id
 		$child = $this->childRepository->getById($registration['child_id']);
 
@@ -44,7 +44,7 @@ class RegistrationController extends \APIBaseController {
 			return $registration;
 	}
 
-		public function store($child)
+	public function store($child)
 	{
 		$registration = new Registration;
 

@@ -28,9 +28,9 @@ class Vacation extends ValidatableEloquent implements TransformableInterface {
 		'max_participants' => 'required|numeric|digits_between:1,3',
 		'current_participants' => 'required|numeric|digits_between:1,3',
 		// Regex voor decimal met max 2 cijfers na komma. Kun je vervangen door eigen gemaakte validatie regel
-		'base_cost' => array('required', 'regex:/^\€?([1-9]{1}[0-9]{0,2}(\,[0-9]{3})*(\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\.[0-9]{0,2})?|0(\.[0-9]{0,2})?|(\.[0-9]{1,2})?)€/'),
-		'one_bm_member_cost' => array('required', 'regex:/^\€?([1-9]{1}[0-9]{0,2}(\,[0-9]{3})*(\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\.[0-9]{0,2})?|0(\.[0-9]{0,2})?|(\.[0-9]{1,2})?)€/'),
-		'two_bm_member_cost' => array('required', 'regex:/^\€?([1-9]{1}[0-9]{0,2}(\,[0-9]{3})*(\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\.[0-9]{0,2})?|0(\.[0-9]{0,2})?|(\.[0-9]{1,2})?)€/'),
+		'base_cost' => array('required', 'regex:/^([1-9]{1}[0-9]{0,2}(\,[0-9]{3})*(\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\.[0-9]{0,2})?|0(\.[0-9]{0,2})?|(\.[0-9]{1,2})?)$/'),
+		'one_bm_member_cost' => array('required', 'regex:/^([1-9]{1}[0-9]{0,2}(\,[0-9]{3})*(\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\.[0-9]{0,2})?|0(\.[0-9]{0,2})?|(\.[0-9]{1,2})?)$/'),
+		'two_bm_member_cost' => array('required', 'regex:/^([1-9]{1}[0-9]{0,2}(\,[0-9]{3})*(\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\.[0-9]{0,2})?|0(\.[0-9]{0,2})?|(\.[0-9]{1,2})?)$/'),
 		'tax_deductable' => 'required',
 		'begin_date' => 'required',
 		'end_date' => 'required'
