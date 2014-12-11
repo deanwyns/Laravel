@@ -4,6 +4,7 @@ class VacationTransformer extends League\Fractal\TransformerAbstract {
     public function transform(Vacation $vacation) {
         $currentParticipants = $vacation->registrations()->count();
         $likes = $vacation->likes()->count();
+        $categoryPhoto = URL::route('category.photo', ['category' => $vacation->category_id]);
 
         return [
             'id' => $vacation->id,
@@ -24,7 +25,8 @@ class VacationTransformer extends League\Fractal\TransformerAbstract {
             'endDate' => $vacation->endDate,
             'likes' => $likes,
             'picasa_album_id' => $vacation->picasa_album_id,
-            'category_id' => $vacation->category_id
+            'category_id' => $vacation->category_id,
+            'category_photo' => $categoryPhoto
         ];
     }
 }

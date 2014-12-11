@@ -166,6 +166,7 @@ Route::api(['version' => 'v1'], function() {
 	Route::group(['prefix' => 'category'], function() {
 		Route::get('/', 'VacationController@getCategories');
 		Route::get('/{category}', 'VacationController@getCategory');
+		Route::get('/{category}/photo', ['uses' => 'VacationController@getCategoryPhoto', 'as' => 'category.photo']);
 
 		Route::post('/', ['uses' => 'VacationController@postCategory', 'protected' => true, 'scopes' => 'admin']);
 		Route::put('/{category}', ['uses' => 'VacationController@updateCategory', 'protected' => true, 'scopes' => 'admin']);

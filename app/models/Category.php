@@ -1,5 +1,7 @@
 <?php
-class Category extends ValidatableEloquent {
+use Dingo\Api\Transformer\TransformableInterface;
+
+class Category extends ValidatableEloquent implements TransformableInterface {
 	protected $tables = 'categories';
 
 	protected $fillable = [
@@ -14,5 +16,9 @@ class Category extends ValidatableEloquent {
 
 	public function vacations() {
 		return $this->belongsToMany('Vacation');
+	}
+
+	public function getTransformer() {
+		return new CategoryTransformer;
 	}
 }

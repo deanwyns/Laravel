@@ -122,6 +122,17 @@ class VacationController extends \APIBaseController {
 		return $category;
 	}
 
+	public function getCategoryPhoto($category) {
+		$data = $category->photo_url;
+
+		/*list($type, $data) = explode(';', $data);
+		list(, $data)      = explode(',', $data);
+		$data = base64_decode($data);*/
+
+		$image = Image::make($data);
+		return $image->response('jpg');
+	}
+
 	public function postCategory() {
 		$category = new Category;
 		if(!$category->validate(Input::all()))

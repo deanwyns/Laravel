@@ -131,7 +131,8 @@ return array(
 		'App\Providers\RepositoryProvider',
 
 		'Barryvdh\Cors\CorsServiceProvider',
-		'N0m4dz\Laracasa\LaracasaServiceProvider'
+		'N0m4dz\Laracasa\LaracasaServiceProvider',
+		'Intervention\Image\ImageServiceProvider'
 	),
 
 	/*
@@ -160,6 +161,7 @@ return array(
 
 	'aliases' => array(
 		'Laracasa' 			=> 'N0m4dz\Laracasa\Facades\Laracasa',
+		'Image' 			=> 'Intervention\Image\Facades\Image',
 
 		'API'               => 'Dingo\Api\Facade\API',
 		'App'               => 'Illuminate\Support\Facades\App',
