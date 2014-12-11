@@ -13,7 +13,8 @@ class Vacation extends ValidatableEloquent implements TransformableInterface {
 		'base_cost', // Prijs wanneer geen enkele ouder lid is van Bond Moysson 
 		'one_bm_member_cost', 'two_bm_member_cost', // idem base_cost maar waar respectievelijk 1 & 2 ouders lid van Bond Moysson
 		'tax_deductable',
-		'begin_date', 'end_date'
+		'begin_date', 'end_date',
+		'category_id', 'picasa_album_id'
 	];
 
 	protected $rules = [
