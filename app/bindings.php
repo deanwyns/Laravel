@@ -2,6 +2,20 @@
 
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
+class DifferentRuleValidator
+{
+    public function validate($attribute, $value, $params, $validator) {
+		$otherField = Input::get($params[0]);
+        if($otherField === null) {
+        	return true;
+        }
+
+        return $value !== $otherField;
+    }
+}
+
+Validator::extend('different_if_exists', 'DifferentRuleValidator@validate');
+
 /*
 |--------------------------------------------------------------------------
 | Model Binders

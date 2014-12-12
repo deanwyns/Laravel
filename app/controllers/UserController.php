@@ -42,21 +42,38 @@ class UserController extends \APIBaseController {
 	 */
 	public function store()
 	{
-		$user = new User; $parents = new Parents;
-		if(!($user->validate(Input::all()) & $parents->validate(Input::all()))) {
+		$attributes = Input::all();
+		$user = new User; $parents = new Parents; $address = new Address;
+		/*if(!in_array('address_id', $attributes)) {
+			if(!$address->validate($attributes)) {
+				throw new StoreResourceFailedException(
+					'Fout bij het aanmaken gebruiker');
+			}
+
+			$address = $this->addressRepository->create($attributes);
+			if(!$address) {
+				throw new StoreResourceFailedException(
+					'Fout bij het aanmaken gebruiker');
+			}
+		}
+
+		$attributes['address_id'] = $address->id;*/
+
+		if(!($user->validate($attributes) & $parents->validate($attributes))) {
 			$userError = is_object($user->errors()) ? $user->errors()->toArray() : [];
 			$subUserError = is_object($parents->errors()) ? $parents->errors()->toArray() : [];
 			throw new StoreResourceFailedException(
 				'Fout bij het aanmaken gebruiker',
 				['messages' => array_merge($userError, $subUserError)]);
 		}
-		if($this->userRepository->createParents(Input::all())) {
+		if($this->userRepository->createParents($attributes)) {
 			return $this->created();
 		} else {
 			throw new StoreResourceFailedException(
 					'Fout bij het aanmaken gebruiker');
 		}
 	}
+
 	public function storeMonitor() {
 		$user = new User; $monitor = new Monitor;
 		if(!($user->validate(Input::all()) & $monitor->validate(Input::all()))) {
@@ -73,6 +90,7 @@ class UserController extends \APIBaseController {
 					'Fout bij het aanmaken gebruiker');
 		}
 	}
+	
 	public function storeAdmin() {
 		$user = new User; $admin = new Admin;
 		if(!($user->validate(Input::all()) & $admin->validate(Input::all()))) {

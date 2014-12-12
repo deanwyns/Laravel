@@ -56,6 +56,21 @@ class RegistrationController extends \APIBaseController {
 		$attributes = Input::all();
 		$attributes['child_id'] = $child->id;
 
+		if(!in_array('address_id', $attributes)) {
+			if(!$address->validate($attributes)) {
+				throw new StoreResourceFailedException(
+					'Fout bij het aanmaken gebruiker');
+			}
+
+			$address = $this->addressRepository->create($attributes);
+			if(!$address) {
+				throw new StoreResourceFailedException(
+					'Fout bij het aanmaken gebruiker');
+			}
+		}
+
+		$attributes['address_id'] = $address->id;
+
 		//checken of de vakantie bestaat
 		$vacationId = $attributes['vacation_id'];
 		$vacation = $this->vacationRepository->getById($vacationId);

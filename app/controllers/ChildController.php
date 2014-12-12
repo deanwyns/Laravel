@@ -25,10 +25,27 @@ class ChildController extends \APIBaseController {
 			throw new UnauthorizedHttpException("U kunt enkel de gegevens van uw eigen kinderen bekijken");
 	}
 
-		public function store()
+	public function store()
 	{
 		$child = new Child;
+		$address = new Address;
 		$attributes = Input::all();
+
+		if(!in_array('address_id', $attributes)) {
+			if(!$address->validate($attributes)) {
+				throw new StoreResourceFailedException(
+					'Fout bij het aanmaken van het kind', $address->errors());
+			}
+
+			$address = $this->addressRepository->create($attributes);
+			if(!$address) {
+				throw new StoreResourceFailedException(
+					'Fout bij het aanmaken van het kind');
+			}
+		}
+
+		$attributes['address_id'] = $address->id;
+
 		$attributes['parents_id'] = $this->auth->user()->userable->id;	 	
 		if(!$child->validate($attributes))
 			throw new StoreResourceFailedException(
