@@ -16,9 +16,9 @@ class Registration extends ValidatableEloquent {
 		'is_paid' => 'required',
 		'child_id' => 'required',
 		'vacation_id' => 'required',
-		'first_name' => 'required',
-		'last_name' => 'required',
-		'address_id' => 'required'
+		'facturation_first_name' => 'required',
+		'facturation_last_name' => 'required',
+		'facturation_address_id' => 'required'
 	];
 
 	//registered Child => subject that will go on the vacation

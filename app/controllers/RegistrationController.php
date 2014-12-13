@@ -56,20 +56,25 @@ class RegistrationController extends \APIBaseController {
 		$attributes = Input::all();
 		$attributes['child_id'] = $child->id;
 
+
+		//als er nog address werdt meegegeven?
 		if(!in_array('address_id', $attributes)) {
+
+			//kijk of de gepaste variabelen om een address aan te maken werden meegegeven
 			if(!$address->validate($attributes)) {
 				throw new StoreResourceFailedException(
-					'Fout bij het aanmaken gebruiker');
+					'Fout bij het toevoegen van het adres');
 			}
-
+			//als de variabelen werden meegegeven en correct valideren wordt er een address aangemaakt
 			$address = $this->addressRepository->create($attributes);
 			if(!$address) {
 				throw new StoreResourceFailedException(
-					'Fout bij het aanmaken gebruiker');
+					'Fout bij het toevoegen van het adres');
 			}
-		}
 
-		$attributes['address_id'] = $address->id;
+			//voeg het address_id toe aan de attributen om de inschrijving te voltooien
+			$attributes['address_id'] = $address->id;
+		}
 
 		//checken of de vakantie bestaat
 		$vacationId = $attributes['vacation_id'];

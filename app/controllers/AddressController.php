@@ -41,7 +41,7 @@ class AddressController extends \APIBaseController {
 
 		//if($address->save())
 		if($address = $this->addressRepository->create(Input::all()))
-			return $address; // HTTP Status Code 201 "Created"
+			return $address; // geef het adres terug zodat het id eventueel kan hergebruikt worden
 		else
 			throw new StoreResourceFailedException(
 				'Fout bij het aanmaken van het adres');	
