@@ -236,7 +236,7 @@ class UserController extends \APIBaseController {
        		$monitorValue = ('Monitor') $value;
        		array_add($monitors, $Monitor['id'], $value);
        	}*/
-        return array_unique($monitors[0]);
+        return array_unique($monitors, SORT_REGULAR);
         }
 
 	//voor alle Users
