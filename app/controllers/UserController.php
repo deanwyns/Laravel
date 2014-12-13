@@ -211,7 +211,7 @@ class UserController extends \APIBaseController {
 
 	//Voor Monitors
 	public function showMonitor($monitor){
-		return $monitor;
+		return $monitor->user; //eerst omzetten naar een user zodat het emailadres, enz... kan worden weergegeven
 	}
 
 	//zoeken in monitors
@@ -227,20 +227,25 @@ class UserController extends \APIBaseController {
 		//searchArray>1 betekent dat er wordt gezocht op een volledige naam (voor + familienaam)
 		if(sizeof($searchArray)>1){			
 			//Voornaam Familienaam
-			$monitorsHelper = DB::table('users_monitors')->Where('first_name', $searchArray[0])->Where('last_name', $searchArray[1])->get();
+			$monitorsHelper = DB::table('users_monitors')->where('first_name', $searchArray[0])->where('last_name', $searchArray[1])->get();
 			//$monitors wordt vervangen ipv gepushed omdat 
 			$monitors = $monitorsHelper;
 
 			//Familienaam Voornaam de "empty($searchArray)" voorkomt dat er een extra lege array wordt meegegeven
 			if(empty($monitors)){
-				$monitorsHelper = DB::table('users_monitors')->Where('first_name', $searchArray[1])->Where('last_name', $searchArray[0])->get();
+				$monitorsHelper = DB::table('users_monitors')->where('first_name', $searchArray[1])->where('last_name', $searchArray[0])->get();
 				array_push($monitors, $monitorsHelper);
 			}
 		}
 		else{
-			$monitors = DB::table('users_monitors')->Where('first_name', $searchArray[0])->orWhere('last_name', $searchArray[0])->get();
+			$monitors = DB::table('users_monitors')->where('first_name', $searchArray[0])->orWhere('last_name', $searchArray[0])->get();
 		}
         return $monitors;
+    }
+
+    //geef een lijst van alle monitors
+    public function getMonitors(){
+    	return DB::table('users_monitors')->get();
     }
 
 	//voor alle Users
