@@ -14,7 +14,8 @@
 		"dingo/api": "master-dev",
 		"lucadegasperi/oauth2-server-laravel": "3.*",
 		"barryvdh/laravel-cors": "0.2.x",
-		"n0m4dz/laracasa": "dev-master"
+		"n0m4dz/laracasa": "dev-master",
+		"intervention/image" : "dev-master"
 	},
 	"autoload": {
 		"classmap": [

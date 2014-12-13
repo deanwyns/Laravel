@@ -218,25 +218,28 @@ class UserController extends \APIBaseController {
 	public function searchMonitor(){
 		$attributes = Input::All();
 		$searchString = $attributes['search_string'];
-
 		$searchArray = explode(' ', $searchString);
 		$monitors = [];
-
-		foreach ($searchArray as $search)
-		{		
-		$monitorsHelper = DB::table('users_monitors')->Where('first_name', $search)->orWhere('last_name', $search)->get();
-
-
-        array_push($monitors, $monitorsHelper);
-       	}
-
+		if(sizeof($searchArray)>1){
+			
+			$monitorsHelper = DB::table('users_monitors')->Where('first_name', $searchArray[0])->Where('last_name', $searchArray[1])->get();
+			$monitors = $monitorsHelper;
+			if(empty($monitors)){
+				$monitorsHelper = DB::table('users_monitors')->Where('first_name', $searchArray[1])->Where('last_name', $searchArray[0])->get();
+				array_push($monitors, $monitorsHelper);
+			}
+		}
+		else{
+			$monitors = DB::table('users_monitors')->Where('first_name', $searchArray[0])->orWhere('last_name', $searchArray[0])->get();
+		}
        	/*$monitorsHelper = $monitors;
        	$monitors = [];
        	foreach($monitorsHelper as $i => $value){
        		$monitorValue = ('Monitor') $value;
        		array_add($monitors, $Monitor['id'], $value);
        	}*/
-        return array_unique($monitors, SORT_REGULAR);
+
+        return $monitors;
         }
 
 	//voor alle Users
