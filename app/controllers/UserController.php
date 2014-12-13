@@ -221,7 +221,7 @@ class UserController extends \APIBaseController {
 
 		//zoekstring opsplitsen
 		$searchString = $attributes['search_string'];
-		$searchArray = explode(' ', $searchString);
+		$searchArray = explode(' ', $searchString,2);
 		$monitors = [];
 
 		//searchArray>1 betekent dat er wordt gezocht op een volledige naam (voor + familienaam)

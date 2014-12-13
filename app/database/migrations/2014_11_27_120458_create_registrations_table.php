@@ -19,7 +19,7 @@ class CreateRegistrationsTable extends Migration {
 			$table->integer('vacation_id')->unsigned();
 			$table->string('facturation_first_name');
 			$table->string('facturation_last_name');
-			$talbe->integer('facturation_address_id')->unsigned();
+			$table->integer('facturation_address_id')->unsigned();
 		});
 	}
 

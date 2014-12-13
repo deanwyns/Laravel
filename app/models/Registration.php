@@ -7,9 +7,9 @@ class Registration extends ValidatableEloquent {
 		'is_paid',
 		'child_id',
 		'vacation_id',
-		'first_name',
-		'last_name',
-		'address_id'
+		'facturation_first_name',
+		'facturation_last_name',
+		'facturation_address_id'
 	];
 
 	protected $rules = [

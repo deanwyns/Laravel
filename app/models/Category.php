@@ -2,7 +2,7 @@
 use Dingo\Api\Transformer\TransformableInterface;
 
 class Category extends ValidatableEloquent implements TransformableInterface {
-	protected $tables = 'categories';
+	protected $table = 'categories';
 
 	protected $fillable = [
 		'name',
