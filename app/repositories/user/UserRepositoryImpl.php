@@ -69,6 +69,8 @@ class UserRepositoryImpl extends AbstractRepository implements UserRepository {
 	}
 
 	public function searchMonitor($searchQuery) {
-		return Monitor::whereRaw('MATCH(first_name, last_name) AGAINST(? IN BOOLEAN MODE)', array($searchQuery))->get();
+		$regex = str_replace(' ', '|', $searchQuery);
+		$rawQuery = 'first_name REGEXP \'' . $regex . '\' OR last_name REGEXP \'' . $regex . '\'';
+		return Monitor::whereRaw($rawQuery)->get();
 	}
 }
