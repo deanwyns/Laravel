@@ -4,6 +4,7 @@ use Dingo\Api\Exception\DeleteResourceFailedException;
 use Dingo\Api\Exception\UpdateResourceFailedException;
 use Dingo\Api\Exception\StoreResourceFailedException;
 use Dingo\Api\Http\ResponseBuilder;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 
 class VacationController extends \APIBaseController {
@@ -177,6 +178,27 @@ class VacationController extends \APIBaseController {
 
 	public function showRegistrations($vacation){
 		return $this->vacationRepository->getRegistrations($vacation);
+	}
+
+	public function like($vacation){
+		if($this->auth->user()->userable_type != 'Parents'){
+			throw new UnauthorizedHttpException('Enkel ouders mogen een vakantie leuk vinden');
+		}
+
+		$attributes = input::all();
+		$attributes['vacation_id'] = $vacation->id;
+		$attributes['user_id'] = $this->auth->user()->id;
+
+		$like = new Like;
+		if(!$like->validate($attributes))
+			throw new StoreResourceFailedException(
+				'Fout bij het leuk vinden van de vakantie', $category->errors());
+
+		if($this->vacationRepository->createLike($attributes))
+			return $this->created(); // HTTP Status Code 201 "Created"
+		else
+			throw new StoreResourceFailedException(
+				'Fout bij het leuk vinden van de vakantie');
 	}
 
 }

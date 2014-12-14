@@ -42,9 +42,8 @@ class ChildController extends \APIBaseController {
 				throw new StoreResourceFailedException(
 					'Fout bij het aanmaken van het kind');
 			}
+			$attributes['address_id'] = $address->id;
 		}
-
-		$attributes['address_id'] = $address->id;
 
 		$attributes['parents_id'] = $this->auth->user()->userable->id;	 	
 		if(!$child->validate($attributes))
@@ -60,11 +59,18 @@ class ChildController extends \APIBaseController {
 
 	public function update($child)
 	{
-		if(!$child->validate(Input::all(), true, $child->id))
+		//parameters uit de request halen en in een variabele stoppen
+		$attributes = Input::all();
+
+		//update het address
+		$this->addressRepository->update($this->getAddress($child), $attributes);
+
+		//alle andere gegevens met betrekking tot een kind aanpassen
+		if(!$child->validate($attributes, true, $child->id))
 			throw new UpdateResourceFailedException(
 				'Fout bij het updaten van het kind', $child->errors());
 
-		if($child->update(Input::all()))
+		if($child->update($attributes))
 			return $child;
 		else
 			throw new UpdateResourceFailedException(

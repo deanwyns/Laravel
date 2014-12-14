@@ -133,7 +133,10 @@ Route::api(['version' => 'v1'], function() {
 		//CRUD voor sociale netwerken
 		Route::post('/me/addsocialnetwork', ['uses' => 'SocialNetworkController@store', 'protected' => true, 'scopes' => ['monitor', 'admin']]);
 		Route::put('/me/{socialNetwork}/socialnetwork', ['uses' => 'SocialNetworkController@update', 'protected' => true, 'scopes' => ['monitor', 'admin']]);
-		Route::delete('/me/{socialNetwork}/socialnetwork', ['uses' => 'SocialNetworkController@destroy', 'protected' => true, 'scopes' => ['monitor', 'admin']]);		
+		Route::delete('/me/{socialNetwork}/socialnetwork', ['uses' => 'SocialNetworkController@destroy', 'protected' => true, 'scopes' => ['monitor', 'admin']]);
+
+		//route om een vakantie leuk te vinden
+		Route::post('me/{vacation}/like',['uses' => 'VacationController@like', 'protected' => true, 'scopes' => 'parents']);		
 	});
 
 	Route::group(['prefix' => 'monitor'], function(){

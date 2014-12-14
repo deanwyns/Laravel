@@ -7,5 +7,6 @@ interface VacationRepository {
 	public function getCategories();
 	public function createCategory($attributes);
 	public function getRegistrations($vacation);
+	public function getLikes($vacation);
 	
 }

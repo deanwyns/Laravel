@@ -68,17 +68,9 @@ class AddressController extends \APIBaseController {
 	 */
 	public function update($address)
 	{
-		if(!$address->validate(Input::all(), true, $address->id))
-			throw new UpdateResourceFailedException(
-				'Fout bij het updaten van het adres', $address->errors());
+		$attributes = Input::all();
+		return $this->addressRepository->update($address, $attributes);
 
-		if($address->update(Input::all()))
-			return $address;
-		else
-			throw new UpdateResourceFailedException(
-				'Fout bij het updaten van het adres');
-
-		return $address;
 	}
 
 
