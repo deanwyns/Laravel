@@ -12,11 +12,13 @@ class RegistrationController extends \APIBaseController {
 	protected $registrationRepository;
 	protected $vacationRepository;
 	protected $childRepository;
+	protected $addressRepository;
 
-	public function __construct(RegistrationRepository $registrationRepository, VacationRepository $vacationRepository, ChildRepository $childRepository){
+	public function __construct(RegistrationRepository $registrationRepository, VacationRepository $vacationRepository, ChildRepository $childRepository, AddressRepository $addressRepository){
 		$this->registrationRepository = $registrationRepository;
 		$this->vacationRepository = $vacationRepository;
 		$this->childRepository = $childRepository;
+		$this->addressRepository= $addressRepository;
 	}
 
 	//kijkt of het kind is verbonden met de ingelogde gebruiker of dat de ingelogde gebruiker een admin is
@@ -59,6 +61,7 @@ class RegistrationController extends \APIBaseController {
 
 		//als er nog address werdt meegegeven?
 		if(!in_array('address_id', $attributes)) {
+			$address = new Address;
 
 			//kijk of de gepaste variabelen om een address aan te maken werden meegegeven
 			if(!$address->validate($attributes)) {
@@ -73,7 +76,7 @@ class RegistrationController extends \APIBaseController {
 			}
 
 			//voeg het address_id toe aan de attributen om de inschrijving te voltooien
-			$attributes['address_id'] = $address->id;
+			$attributes['facturation_address_id'] = $address->id;
 		}
 
 		//checken of de vakantie bestaat

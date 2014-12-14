@@ -40,7 +40,8 @@ class VacationRepositoryImpl extends AbstractRepository implements VacationRepos
 
 	//voegt een like toe aan de gegeven vakantie
 	public function createLike($attributes){
-		$likes = $this->getById($attributes['vacation_id'])->likes;
+		$vacation = $this->getById($attributes['vacation_id']);
+		$likes = $vacation->likes;
 
 		//controleert of de vakantie nog niet is leuk gevonden door de user
 		foreach($likes as $key => $value){
