@@ -2,7 +2,7 @@
 class VacationTransformer extends League\Fractal\TransformerAbstract {
 
     public function transform(Vacation $vacation) {
-        $currentParticipants = sizeof($vacation->registrations);
+        $currentParticipants = $vacation->registrations->count();
         //$likes = sizeof($vacation->likes);
         $likes = $vacation->likes->count();
         $categoryPhoto = URL::route('category.photo', ['category' => $vacation->category_id]);
