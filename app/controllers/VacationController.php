@@ -185,14 +185,14 @@ class VacationController extends \APIBaseController {
 			throw new UnauthorizedHttpException('Enkel ouders mogen een vakantie leuk vinden');
 		}
 
-		$attributes = input::all();
+		$attributes = Input::all();
 		$attributes['vacation_id'] = $vacation->id;
 		$attributes['user_id'] = $this->auth->user()->id;
 
 		$like = new Like;
 		if(!$like->validate($attributes))
 			throw new StoreResourceFailedException(
-				'Fout bij het leuk vinden van de vakantie', $category->errors());
+				'Fout bij het leuk vinden van de vakantie', $like->errors());
 
 		if($this->vacationRepository->createLike($attributes))
 			return $this->created(); // HTTP Status Code 201 "Created"
