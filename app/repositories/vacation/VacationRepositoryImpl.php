@@ -35,7 +35,7 @@ class VacationRepositoryImpl extends AbstractRepository implements VacationRepos
 
 	//geeft het aantal Likes dat er zijn gekoppeld aan de gegeven vakantie terug
 	public function getLikes($vacation){
-		return sizof($vacation->likes);
+		return $vacation->likes->count();
 	}
 
 	//voegt een like toe aan de gegeven vakantie
