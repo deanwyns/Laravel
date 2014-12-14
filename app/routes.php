@@ -140,9 +140,9 @@ Route::api(['version' => 'v1'], function() {
 	});
 
 	Route::group(['prefix' => 'monitor'], function(){
-		Route::get('/',  ['uses' => 'UserController@getMonitors', 'protected' => true,'scopes' => ['monitor', 'admin']]);		
+		Route::get('/',  'UserController@getMonitors');		
 		Route::get('/search', 'UserController@searchMonitor');
-		Route::get('/{monitor}', ['uses' => 'UserController@showMonitor', 'protected' => true,'scopes' => ['monitor', 'admin']]);
+		Route::get('/{monitor}', 'UserController@showMonitor');
 	});
 
 	Route::group(['prefix' => 'address'], function(){
