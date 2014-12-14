@@ -23,7 +23,7 @@ class VacationTransformer extends League\Fractal\TransformerAbstract {
             'taxDeductable' => $vacation->taxDeductable,
             'beginDate' => $vacation->beginDate,
             'endDate' => $vacation->endDate,
-            'likes' => count($likes),
+            'likes' => $likes,
             'picasa_album_id' => $vacation->picasa_album_id,
             'category_id' => $vacation->category_id,
             'category_photo' => $categoryPhoto
