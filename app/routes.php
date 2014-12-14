@@ -141,7 +141,7 @@ Route::api(['version' => 'v1'], function() {
 
 	Route::group(['prefix' => 'monitor'], function(){
 		Route::get('',  ['uses' => 'UserController@getMonitors', 'protected' => true,'scopes' => ['monitor', 'admin']]);		
-		Route::post('/search', ['uses' => 'UserController@searchMonitor', 'protected' => true,'scopes' => ['monitor', 'admin']]);
+		Route::get('/search', 'UserController@searchMonitor');
 		Route::get('/{monitor}', ['uses' => 'UserController@showMonitor', 'protected' => true,'scopes' => ['monitor', 'admin']]);
 	});
 
