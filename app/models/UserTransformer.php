@@ -7,6 +7,11 @@ class UserTransformer extends League\Fractal\TransformerAbstract {
     	$subUserAttributes = [];
     	switch($subUserClass) {
     		case 'parents':
+                $children = []; $transformer = new ChildTransformer;
+                foreach($subUser->children as $child) {
+                    $children[] = $transformer->transform($child);
+                }
+
     			$subUserAttributes = [
     				'first_name_mother' => $subUser->first_name_mother,
     				'last_name_mother' => $subUser->last_name_mother,
@@ -15,7 +20,7 @@ class UserTransformer extends League\Fractal\TransformerAbstract {
     				'last_name_father' => $subUser->last_name_father,
     				'nrn_father' => $subUser->nrn_father,
     				'phone_number' => $subUser->phone_number,
-                    'children' => $subUser->children
+                    'children' => $children
     			];
     			break;
 
