@@ -68,11 +68,7 @@ class UserRepositoryImpl extends AbstractRepository implements UserRepository {
 		return [];
 	}
 
-	public function getMotherAddress($user){
-		return $user->userable->address_id_mother;
-	}
-
-	public function getFatherAddress($user){
-		return $user->userable->address_id_father;
+	public function searchMonitor($searchQuery) {
+		return Monitor::whereRaw('MATCH(first_name, last_name) AGAINST(? IN BOOLEAN MODE)', array($searchQuery))->get();
 	}
 }

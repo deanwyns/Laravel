@@ -215,8 +215,9 @@ class UserController extends \APIBaseController {
 	}
 
 	//zoeken in monitors
-	public function searchMonitor(){
-		//alle attributen ophalen
+	public function searchMonitor() {
+		return $this->userRepository->searchMonitor(Input::get('search_string'));
+		/*//alle attributen ophalen
 		$attributes = Input::All();
 
 		//zoekstring opsplitsen
@@ -240,7 +241,7 @@ class UserController extends \APIBaseController {
 		else{
 			$monitors = DB::table('users_monitors')->where('first_name', $searchArray[0])->orWhere('last_name', $searchArray[0])->get();
 		}
-        return $monitors;
+        return $monitors;*/
     }
 
     //geef een lijst van alle monitors

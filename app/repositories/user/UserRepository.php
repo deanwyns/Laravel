@@ -12,4 +12,6 @@ interface UserRepository {
 	public function getChildren($user);
 	public function getMotherAddress($user);
 	public function getFatherAddress($user);
+
+	public function searchMonitor($searchQuery);
 }
