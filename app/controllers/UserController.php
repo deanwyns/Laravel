@@ -217,31 +217,6 @@ class UserController extends \APIBaseController {
 	//zoeken in monitors
 	public function searchMonitor() {
 		return $this->userRepository->searchMonitor(Input::get('search_string'));
-		/*//alle attributen ophalen
-		$attributes = Input::All();
-
-		//zoekstring opsplitsen
-		$searchString = $attributes['search_string'];
-		$searchArray = explode(' ', $searchString,2);
-		$monitors = [];
-
-		//searchArray>1 betekent dat er wordt gezocht op een volledige naam (voor + familienaam)
-		if(sizeof($searchArray)>1){			
-			//Voornaam Familienaam
-			$monitorsHelper = DB::table('users_monitors')->where('first_name', $searchArray[0])->where('last_name', $searchArray[1])->get();
-			//$monitors wordt vervangen ipv gepushed omdat 
-			$monitors = $monitorsHelper;
-
-			//Familienaam Voornaam de "empty($searchArray)" voorkomt dat er een extra lege array wordt meegegeven
-			if(empty($monitors)){
-				$monitorsHelper = DB::table('users_monitors')->where('first_name', $searchArray[1])->where('last_name', $searchArray[0])->get();
-				array_push($monitors, $monitorsHelper);
-			}
-		}
-		else{
-			$monitors = DB::table('users_monitors')->where('first_name', $searchArray[0])->orWhere('last_name', $searchArray[0])->get();
-		}
-        return $monitors;*/
     }
 
     //geef een lijst van alle monitors
