@@ -130,6 +130,10 @@ class RegistrationController extends \APIBaseController {
 
 	public function update($registration)
 	{
+		if(Input::has('is_paid')){
+			$registration->is_paid = Input::get('is_paid');
+
+		}
 		if(!$registration->validate(Input::all(), true, $registration->id))
 			throw new UpdateResourceFailedException(
 				'Fout bij het updaten van de inschrijving', $registration->errors());
