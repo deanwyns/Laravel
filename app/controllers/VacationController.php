@@ -181,13 +181,14 @@ class VacationController extends \APIBaseController {
 	}
 
 	public function like($vacation){
-		if($this->auth->user()->userable_type != 'Parents'){
+		// Wordt gedaan door die scopes, Nico :P
+		/*if($this->auth->user()->userable_type != 'Parents'){
 			throw new UnauthorizedHttpException('Enkel ouders mogen een vakantie leuk vinden');
-		}
+		}*/
 
 		$attributes = Input::all();
 		$attributes['vacation_id'] = $vacation->id;
-		$attributes['user_id'] = $this->auth->user()->id;
+		$attributes['parents_id'] = $this->auth->user()->userable->id;
 
 		$like = new Like;
 		if(!$like->validate($attributes))
@@ -199,6 +200,13 @@ class VacationController extends \APIBaseController {
 		else
 			throw new StoreResourceFailedException(
 				'Fout bij het leuk vinden van de vakantie');
+	}
+
+	public function getLikeBoolean($vacation) {
+		if($this->auth->user()->userable->likes()->where('vacation_id', '=', $vacation->id)->count() === 0)
+			return 0;
+		else
+			return 1;
 	}
 
 }

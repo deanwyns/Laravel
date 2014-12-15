@@ -136,7 +136,8 @@ Route::api(['version' => 'v1'], function() {
 		Route::delete('/me/{socialNetwork}/socialnetwork', ['uses' => 'SocialNetworkController@destroy', 'protected' => true, 'scopes' => ['monitor', 'admin']]);
 
 		//route om een vakantie leuk te vinden
-		Route::post('me/{vacation}/like',['uses' => 'VacationController@like', 'protected' => true, 'scopes' => 'parents']);		
+		Route::post('me/{vacation}/like',['uses' => 'VacationController@like', 'protected' => true, 'scopes' => 'parents']);
+		Route::get('me/{vacation}/like', ['uses' => 'VacationController@getLikeBoolean', 'protected' => true, 'scopes' => 'parents']);		
 	});
 
 	Route::group(['prefix' => 'monitor'], function(){
