@@ -157,6 +157,7 @@ Route::api(['version' => 'v1'], function() {
 
 	Route::group(['prefix' => 'registration'], function(){
 		Route::get('/', ['uses'=> 'RegistrationController@getAllRegistrations', 'protected' => true, 'scopes' => 'admin']);
+		Route::get('{registration}', ['uses' => 'RegistrationController@show', 'protected' => true, 'scopes' => 'admin']);
 		Route::put('{registration}', ['uses' => 'RegistrationController@update', 'protected' => true, 'scopes' => 'admin']);
 		Route::delete('{registration}', ['uses' => 'RegistrationController@destroy', 'protected' => true, 'scopes' => 'admin']);
 	});
