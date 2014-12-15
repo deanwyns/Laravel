@@ -125,8 +125,6 @@ Route::api(['version' => 'v1'], function() {
 
 		//CRUD voor inschrijvingen
 		Route::post('/me/{child}/register', ['uses' => 'RegistrationController@store', 'protected' => true, 'scopes' => ['parents', 'admin']]);		
-		Route::put('/me/{registration}/registration', ['uses' => 'RegistrationController@update', 'protected' => true, 'scopes' => 'admin']);
-		Route::delete('/me/{registration}/registration', ['uses' => 'RegistrationController@destroy', 'protected' => true, 'scopes' => 'admin']);
 
 		Route::put('/me', ['uses' => 'UserController@updateMe', 'protected' => true, 'scopes' => ['parents', 'monitor', 'admin']]);
 
@@ -159,6 +157,8 @@ Route::api(['version' => 'v1'], function() {
 
 	Route::group(['prefix' => 'registration'], function(){
 		Route::get('/', ['uses'=> 'RegistrationController@getAllRegistrations', 'protected' => true, 'scopes' => 'admin']);
+		Route::put('{registration}', ['uses' => 'RegistrationController@update', 'protected' => true, 'scopes' => 'admin']);
+		Route::delete('{registration}', ['uses' => 'RegistrationController@destroy', 'protected' => true, 'scopes' => 'admin']);
 	});
 
 	Route::group(['prefix' => 'vacation'], function() {
