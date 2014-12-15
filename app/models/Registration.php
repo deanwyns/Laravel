@@ -13,7 +13,6 @@ class Registration extends ValidatableEloquent {
 	];
 
 	protected $rules = [
-		'is_paid' => 'required',
 		'child_id' => 'required',
 		'vacation_id' => 'required',
 		'facturation_first_name' => 'required',
