@@ -89,6 +89,7 @@ Route::api(['version' => 'v1'], function() {
 	// te vragen, en die moeten weg, want we werken met puur
 	// een API :-)
 	Route::group(['prefix' => 'user'], function() {
+		Route::put('me', ['uses' => 'UserController@updateMe', 'protected' => true, 'scopes' => ['parents', 'monitor', 'admin']]);
 		Route::get('me', ['uses' => 'UserController@getMe', 'protected' => true, 'scopes' => ['parents', 'monitor', 'admin']]);
 		Route::get('/', ['uses' => 'UserController@index', 'protected' => true, 'scopes' => 'admin']);
 		// Dit is de route voor een parents account
@@ -125,8 +126,6 @@ Route::api(['version' => 'v1'], function() {
 
 		//CRUD voor inschrijvingen
 		Route::post('/me/{child}/register', ['uses' => 'RegistrationController@store', 'protected' => true, 'scopes' => ['parents', 'admin']]);		
-
-		Route::put('/me', ['uses' => 'UserController@updateMe', 'protected' => true, 'scopes' => ['parents', 'monitor', 'admin']]);
 
 		//CRUD voor sociale netwerken
 		Route::post('/me/addsocialnetwork', ['uses' => 'SocialNetworkController@store', 'protected' => true, 'scopes' => ['monitor', 'admin']]);
