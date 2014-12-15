@@ -31,7 +31,7 @@ class Registration extends ValidatableEloquent implements TransformableInterface
 	}
 
 	public function address() {
-		return $this->belongsTo('Address');
+		return $this->belongsTo('Address', 'facturation_address_id');
 	}
 
 	public $timestamps = false;
