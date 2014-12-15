@@ -1,6 +1,7 @@
 <?php
+use Dingo\Api\Transformer\TransformableInterface;
 
-class Registration extends ValidatableEloquent {
+class Registration extends ValidatableEloquent implements TransformableInterface {
 	protected $table = 'registrations';
 
 	protected $fillable = [
@@ -34,4 +35,8 @@ class Registration extends ValidatableEloquent {
 	}
 
 	public $timestamps = false;
+
+	public function getTransformer() {
+		return new RegistrationTransformer;
+	}
 }

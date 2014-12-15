@@ -157,6 +157,10 @@ Route::api(['version' => 'v1'], function() {
 		Route::get('/{child}',['uses'=> 'ChildController@show', 'protected' => true, 'scopes' => 'admin']);
 	});
 
+	Route::group(['prefix' => 'registration'], function(){
+		Route::get('/', ['uses'=> 'RegistrationController@getAllRegistrations', 'protected' => true, 'scopes' => 'admin']);
+	});
+
 	Route::group(['prefix' => 'vacation'], function() {
 		Route::get('albums', 'VacationController@getAlbums');
 		Route::get('{vacation}/photos', 'VacationController@getVacationAlbum');

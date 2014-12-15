@@ -4,13 +4,13 @@ class Like extends ValidatableEloquent {
 
 	protected $fillable =
 	[
-		'user_id',
+		'parents_id',
 		'vacation_id'
 	];
 
 	protected $rules = 
 	[
-		'user_id' => 'required',		
+		'parents_id' => 'required',		
 		'vacation_id' => 'required'
 	];
 

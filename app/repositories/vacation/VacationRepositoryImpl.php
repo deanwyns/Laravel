@@ -41,13 +41,17 @@ class VacationRepositoryImpl extends AbstractRepository implements VacationRepos
 	//voegt een like toe aan de gegeven vakantie
 	public function createLike($attributes){
 		$vacation = $this->getById($attributes['vacation_id']);
-		$likes = $vacation->likes;
+		/*$likes = $vacation->likes;
 
 		//controleert of de vakantie nog niet is leuk gevonden door de user
 		foreach($likes as $key => $value){
 			if($value->user_id == $attributes['user_id']){
 				throw new UnauthorizedHttpException('Je kan een vakantie maar één keer leuk vinden');
 			}
+		}*/
+
+		if($vacation->likes()->where('parents_id', '=', $attributes['parents_id'])->count() !== 0) {
+			throw new UnauthorizedHttpException('Je kan een vakantie maar één keer leuk vinden');
 		}
 
 		//als het de eerste keer is dat de gebruiker deze vakantie wil leuk vinden wordt de Like aangemaakt.

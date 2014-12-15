@@ -35,6 +35,10 @@ class RegistrationController extends \APIBaseController {
 			return false;
 	}
 
+	public function getAllRegistrations() {
+		return $this->registrationRepository->all();
+	}
+
 	public function show($registration) {
 		//kind waar de inschrijving op van toepassing is ophalen a.d.h.v. id
 		$child = $this->childRepository->getById($registration['child_id']);
