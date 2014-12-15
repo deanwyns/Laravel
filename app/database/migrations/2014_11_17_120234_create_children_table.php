@@ -22,10 +22,6 @@ class CreateChildrenTable extends Migration {
 			$table->string('nrn'); //national registry number
 		});
 	}
-	/*
-
-	*/
-
 	/**
 	 * Reverse the migrations.
 	 *

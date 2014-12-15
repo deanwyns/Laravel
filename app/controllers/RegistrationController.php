@@ -5,6 +5,7 @@ use Dingo\Api\Exception\UpdateResourceFailedException;
 use Dingo\Api\Exception\StoreResourceFailedException;
 use Dingo\Api\Http\ResponseBuilder;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class RegistrationController extends \APIBaseController {
 	use ControllerTrait;
@@ -45,7 +46,7 @@ class RegistrationController extends \APIBaseController {
 
 		//mag de ingelogde gebruiker het kind zijn gegevens zien?
 		if(!$this->checkForDabbling($child))
-			throw new UnauthorizedHttpException("U kunt enkel de inschrijvingen van uw eigen kinderen bekijken");
+			throw new BadRequestHttpException("U kunt enkel de inschrijvingen van uw eigen kinderen bekijken");
 		else
 			return $registration;
 	}
@@ -56,13 +57,33 @@ class RegistrationController extends \APIBaseController {
 
 		//mag de ingelogde gebruiker het kind zijn gegevens zien?
 		if(!$this->checkForDabbling($child))
-			throw new UnauthorizedHttpException("U kunt enkel uw eigen kinderen inschrijven");
+			throw new BadRequestHttpException('U kunt enkel uw eigen kinderen inschrijven');
+
+		
+		$attributes = Input::all();
+		$vacationId = $attributes['vacation_id'];
+
+		//checken of de vakantie bestaat		
+		$vacation = $this->vacationRepository->getById($vacationId);
+		if($vacation == null){
+			throw new StoreResourceFailedException(
+				'De gekozen vakantie bestaat niet!');
+		}
+
+		$birthday = new DateTime($child->date_of_birth);
+		$today = new DateTime('today');
+		$age = $birthday->diff($today)->y;
+
+		if($age < $vacation->age_from){
+			throw new BadRequestHttpException('Het kind dat u wenst in te schrijven is te jong');
+		}
+
+		if($age > $vacation->age_to){
+			throw new BadRequestHttpException('Het kind dat u wenst in te schrijven is te oud om deel te nemen aan deze vakantie');
+		}
 
 		//child_id uit de URL halen en invoegen in de invoerParameters.
-		$attributes = Input::all();
 		$attributes['child_id'] = $child->id;
-
-
 		//als er nog address werdt meegegeven?
 		if(!in_array('address_id', $attributes)) {
 			$address = new Address;
@@ -83,13 +104,7 @@ class RegistrationController extends \APIBaseController {
 			$attributes['facturation_address_id'] = $address->id;
 		}
 
-		//checken of de vakantie bestaat
-		$vacationId = $attributes['vacation_id'];
-		$vacation = $this->vacationRepository->getById($vacationId);
-		if($vacation == null){
-			throw new StoreResourceFailedException(
-				'De gekozen vakantie bestaat niet!');
-		}
+
 
 		//valideren van de regels gespecifieerd in het model
 		if(!$registration->validate($attributes))
