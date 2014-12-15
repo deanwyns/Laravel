@@ -3,6 +3,7 @@ class RegistrationTransformer extends League\Fractal\TransformerAbstract {
 
     public function transform(Registration $registration) {
         return [
+            'id' => $registration->id,
             'is_paid' => $registration->is_paid,
             'child_id' => $registration->child_id,
             'child_first_name' => $registration->child->first_name,
