@@ -3,6 +3,7 @@ class ChildTransformer extends League\Fractal\TransformerAbstract {
 
     public function transform(Child $child) {
     	return [
+            'id' => $child->id,
             'first_name' => $child->first_name,
             'last_name' => $child->last_name,
             'address' => $child->address,
