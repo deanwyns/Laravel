@@ -92,6 +92,7 @@ Route::api(['version' => 'v1'], function() {
 		Route::put('me', ['uses' => 'UserController@updateMe', 'protected' => true, 'scopes' => ['parents', 'monitor', 'admin']]);
 		Route::get('me', ['uses' => 'UserController@getMe', 'protected' => true, 'scopes' => ['parents', 'monitor', 'admin']]);
 		Route::get('/', ['uses' => 'UserController@index', 'protected' => true, 'scopes' => 'admin']);
+
 		// Dit is de route voor een parents account
 		// Iedereen kan dit aanmaken
 		Route::post('/', 'UserController@store');

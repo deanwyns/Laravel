@@ -5,16 +5,19 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class DifferentRuleValidator extends Illuminate\Validation\Validator
 {
     public function validateDifferentIfExists($attribute, $value, $params, $validator) {
-		$otherField = $this->getData()[$params[0]];
-        if($otherField === null) {
-        	return true;
-        }
+		$this->requireParameterCount(1, $params, 'different_if_exists');
 
-        return $value !== $otherField;
+		if(array_key_exists($params[0], $this->getData())) {
+			$otherField = $this->getData()[$params[0]];
+
+			return $value !== $otherField;
+		}
+
+		return true;
     }
 
-	protected function replaceOther($message, $attribute, $rule, $parameters) {
-	    return str_replace(':other', $this->getCustomAttributes()[$parameters[0]], $message);
+	protected function replaceDifferentIfExists($message, $attribute, $rule, $parameters) {
+	    return str_replace(':other', $this->getAttribute($parameters[0]), $message);
 	}
 }
 
