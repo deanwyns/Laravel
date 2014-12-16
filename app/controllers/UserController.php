@@ -134,12 +134,23 @@ class UserController extends \APIBaseController {
 	public function update($user)
 	{
 		$subtype = $user->userable;
+
+
 		if(!($user->validate(Input::all(), true, $user->id) & $subtype->validate(Input::all(), true, $user->id))) {
 			$userError = is_object($user->errors()) ? $user->errors()->toArray() : [];
 			$subUserError = is_object($subtype->errors()) ? $subtype->errors()->toArray() : [];
 			throw new UpdateResourceFailedException(
 				'Fout bij aanpassen gebruiker',
 				['messages' => array_merge($userError, $subUserError)]);
+		}
+
+		if(get_type($subtype) === 'admin') {
+			if($user->update(Input::all())) {
+				return $user;
+			} else {
+				throw new UpdateResourceFailedException(
+						'Fout bij aanpassen admin');
+			}
 		}
 
 		if($user->userable->update(Input::all()) & $user->update(Input::all())) {
