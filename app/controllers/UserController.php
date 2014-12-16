@@ -136,7 +136,7 @@ class UserController extends \APIBaseController {
 		$subtype = $user->userable;
 
 
-		if(!($user->validate(Input::all(), true, $user->id) & $subtype->validate(Input::all(), true, $user->id))) {
+		if(!($user->validate(Input::all(), true, $user->id) & $subtype->validate(Input::all(), true, $user->userable->id))) {
 			$userError = is_object($user->errors()) ? $user->errors()->toArray() : [];
 			$subUserError = is_object($subtype->errors()) ? $subtype->errors()->toArray() : [];
 			throw new UpdateResourceFailedException(
