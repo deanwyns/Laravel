@@ -16,10 +16,10 @@ class Parents extends ValidatableEloquent {
 	protected $rules =
 		['first_name_mother' => 'required_without:first_name_father|required_without:last_name_father',
 		 'last_name_mother' => 'required_with:first_name_mother|required_with:nrn_mother',
-		 'nrn_mother' => 'required_with:first_name_mother|required_with:last_name_mother|different_if_exists:nrn_father|unique:users_parents|unique:users_parents,nrn_father|unique:children,nrn', // zorgt voor uniek rijksregisternummer
+		 'nrn_mother' => 'required_with:first_name_mother|required_with:last_name_mother|different_if_exists:nrn_father',//|unique:users_parents|unique:users_parents,nrn_father|unique:children,nrn', // zorgt voor uniek rijksregisternummer
 		 'first_name_father' => 'required_without:first_name_mother|required_without:last_name_mother',
 		 'last_name_father' => 'required_with:first_name_father',
-		 'nrn_father' => 'required_with:first_name_father|required_with:last_name_father|different_if_exists:nrn_mother|unique:users_parents|unique:users_parents,nrn_mother|unique:children,nrn', // zorgt voor uniek rijksregisternummer
+		 'nrn_father' => 'required_with:first_name_father|required_with:last_name_father|different_if_exists:nrn_mother',//|unique:users_parents|unique:users_parents,nrn_mother|unique:children,nrn', // zorgt voor uniek rijksregisternummer
 		 'phone_number' => 'required|digits_between:9,10'
 		 ];
 

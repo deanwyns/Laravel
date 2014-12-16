@@ -144,7 +144,7 @@ class UserController extends \APIBaseController {
 				['messages' => array_merge($userError, $subUserError)]);
 		}
 
-		if(get_type($subtype) === 'admin') {
+		if(gettype($subtype) === 'admin') {
 			if($user->update(Input::all())) {
 				return $user;
 			} else {
