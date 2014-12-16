@@ -160,13 +160,7 @@ class RegistrationController extends \APIBaseController {
 	}
 
 	public function increaseParticipants($vacation){
-		if($vacation->current_participants < $vacation->max_participants){
-			$vacation->current_particpants+1;
-			return true;
-		}
-		else {
-			return false;
-		}
+		return $vacation->current_participants < $vacation->max_participants;
 	}
 
 	public function missingMethod($parameters = []) {

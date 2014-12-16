@@ -36,6 +36,4 @@ class Parents extends ValidatableEloquent {
 	public function children() {
 		return $this->hasMany('Child');
 	}
-
-
 }
