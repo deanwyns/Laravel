@@ -84,6 +84,10 @@ class RegistrationController extends \APIBaseController {
 
 		//child_id uit de URL halen en invoegen in de invoerParameters.
 		$attributes['child_id'] = $child->id;
+
+		if($child->registrations()->where('vacation_id', '=', $vacation->id)->count() !== 0)
+			throw new BadRequestHttpException('U kunt uw kind slechts één maal voor eenzelfde vakantie inschrijven');
+
 		//als er nog address werdt meegegeven?
 		if(!in_array('address_id', $attributes)) {
 			$address = new Address;
@@ -93,6 +97,7 @@ class RegistrationController extends \APIBaseController {
 				throw new StoreResourceFailedException(
 					'Fout bij het toevoegen van het adres');
 			}
+
 			//als de variabelen werden meegegeven en correct valideren wordt er een address aangemaakt
 			$address = $this->addressRepository->create($attributes);
 			if(!$address) {
@@ -124,7 +129,6 @@ class RegistrationController extends \APIBaseController {
 					throw new StoreResourceFailedException(
 						'Fout bij het aanmaken van de inschrijving');	
 				}
-
 		}
 	
 
